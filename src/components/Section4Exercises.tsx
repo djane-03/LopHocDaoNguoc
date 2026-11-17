@@ -416,7 +416,7 @@ export const Section4Exercises: React.FC<Section4ExercisesProps> = ({
 
             <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
               <a
-                href="/assets/aistudio/T__LI_U__I_N_T_CH__I_N_C__00faaa14.pdf"
+                href="./assets/aistudio/T__LI_U__I_N_T_CH__I_N_C__00faaa14.pdf"
                 download="Bai_Tap_Ve_Nha_Dien_Tich_Dien_Co.pdf"
                 className="neo-btn w-full sm:w-auto px-6 py-3 bg-amber-300 hover:bg-amber-400 text-slate-900 font-bold text-sm flex items-center justify-center gap-2 cursor-pointer"
               >

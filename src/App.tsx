@@ -714,7 +714,7 @@ export default function App() {
                 </div>
 
                 <a
-                  href="/assets/aistudio/T__LI_U__I_N_T_CH__I_N_C__00faaa14.pdf"
+                  href="./assets/aistudio/T__LI_U__I_N_T_CH__I_N_C__00faaa14.pdf"
                   download="File_BTVN_Dien_Tich_Dien_Co.pdf"
                   className="neo-btn px-4 py-2.5 bg-[#FAF8F5] hover:bg-amber-100 text-xs font-bold text-slate-900 inline-flex items-center gap-2 whitespace-nowrap shrink-0 self-start md:self-auto"
                 >
@@ -916,7 +916,7 @@ export default function App() {
           </div>
           <div className="flex flex-wrap items-center gap-4">
             <a
-              href="/assets/aistudio/T__LI_U__I_N_T_CH__I_N_C___1__817db971.pdf"
+              href="./assets/aistudio/T__LI_U__I_N_T_CH__I_N_C___1__817db971.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-slate-900 underline underline-offset-2"
