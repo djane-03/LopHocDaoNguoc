@@ -7,6 +7,9 @@ export default defineConfig(() => {
   return {
     base: './',
     plugins: [react(), tailwindcss()],
+    build: {
+      assetsInlineLimit: 2097152,
+    },
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),

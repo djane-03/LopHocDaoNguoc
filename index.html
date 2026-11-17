@@ -53,6 +53,23 @@
   <body class="bg-[#FAF8F5] text-slate-900 antialiased selection:bg-amber-200 selection:text-slate-900">
     <div id="root"></div>
     <script type="module" src="./src/main.tsx"></script>
+    <script>
+      (function () {
+        var isViteDev = !!document.querySelector('script[src*="@vite/client"]');
+        var hasRawTsx = !!document.querySelector('script[src*="src/main.tsx"]');
+        if (!isViteDev && hasRawTsx) {
+          var link = document.createElement("link");
+          link.rel = "stylesheet";
+          link.href = "./gh-pages-bundle/app.css";
+          document.head.appendChild(link);
+
+          var script = document.createElement("script");
+          script.type = "module";
+          script.src = "./gh-pages-bundle/app.js";
+          document.body.appendChild(script);
+        }
+      })();
+    </script>
   </body>
 </html>
 
