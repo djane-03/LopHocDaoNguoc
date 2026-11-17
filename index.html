@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nghệ Thuật Sử Dụng Điển Cố Trong Tác Phẩm Văn Học | Lớp Học Đảo Ngược</title>
+    <meta name="description" content="Website học tập tương tác theo mô hình Lớp học đảo ngược với chủ đề Nghệ thuật sử dụng điển cố trong tác phẩm văn học." />
+    <meta property="og:title" content="Nghệ Thuật Sử Dụng Điển Cố Trong Tác Phẩm Văn Học | Lớp Học Đảo Ngược" />
+    <meta property="og:description" content="Website học tập tương tác theo mô hình Lớp học đảo ngược với chủ đề Nghệ thuật sử dụng điển cố trong tác phẩm văn học." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,600&family=IBM+Plex+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <script>
+      (function () {
+        try {
+          var currentFetch = window.fetch ? window.fetch.bind(window) : undefined;
+          if (currentFetch) {
+            Object.defineProperty(window, "fetch", {
+              configurable: true,
+              enumerable: true,
+              get: function () {
+                return currentFetch;
+              },
+              set: function (newFetch) {
+                if (typeof newFetch === "function") {
+                  currentFetch = newFetch;
+                }
+              },
+            });
+          }
+        } catch (_e) {
+          // Ignore if descriptor is locked
+        }
+
+        window.addEventListener(
+          "error",
+          function (event) {
+            if (
+              (event.filename && event.filename.indexOf("chrome-extension://") === 0) ||
+              (event.message && event.message.indexOf("Cannot set property fetch") !== -1)
+            ) {
+              event.stopImmediatePropagation();
+              event.preventDefault();
+            }
+          },
+          true
+        );
+      })();
+    </script>
+  </head>
+  <body class="bg-[#FAF8F5] text-slate-900 antialiased selection:bg-amber-200 selection:text-slate-900">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

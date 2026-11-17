@@ -1,0 +1,6 @@
+{
+  "name": "Điển Cố Văn Học — Lớp Học Đảo Ngược",
+  "description": "Website học tập tương tác theo mô hình Lớp học đảo ngược với chủ đề Nghệ thuật sử dụng điển cố trong tác phẩm văn học, tích hợp theo dõi tiến trình và Google Sheets Webhook.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
