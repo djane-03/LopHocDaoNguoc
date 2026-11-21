@@ -10,15 +10,14 @@ import {
   TableProperties,
   Link2,
   Send,
-  Download,
   Lock,
   AlertCircle,
+  LogOut,
 } from "lucide-react";
 import {
   PLANT_STAGES,
   PlantStage,
   DEFAULT_WEBHOOK_URL,
-  STUDENT_ROSTER_12A1,
   normalizeMhs,
 } from "./data/lessonData";
 import { LiteraryHeroDoodle } from "./components/DoodleIllustrations";
@@ -31,23 +30,6 @@ import { Section2Characteristics } from "./components/Section2Characteristics";
 import { Section3CulturalValue } from "./components/Section3CulturalValue";
 import { Section4Exercises } from "./components/Section4Exercises";
 import { WebhookCodeModal, SubmissionRecord } from "./components/WebhookCodeModal";
-
-function buildInitialRosterRecords(): SubmissionRecord[] {
-  return STUDENT_ROSTER_12A1.map((student) => ({
-    id: student.mhs,
-    mhs: student.mhs,
-    fullName: student.fullName,
-    submittedAt: "",
-    quizResult: "",
-    essayResult1: "",
-    essayResult2: "",
-    essayResult3: "",
-    essayResult: "",
-    homeworkLink: "",
-    completedStages: 0,
-    progressStatus: "0/4",
-  }));
-}
 
 const ACTIVE_STUDENT_UI_STORAGE_KEY = "active_student_ui_state_12a1_v2";
 
@@ -68,12 +50,10 @@ function loadPersistedStudentUIState(): PersistedStudentUIState | null {
     const parsed = JSON.parse(raw);
     if (!parsed || typeof parsed !== "object") return null;
 
-    const normalizedCode = normalizeMhs(String(parsed.studentMhs || ""));
-    const matchedStudent = STUDENT_ROSTER_12A1.find(
-      (s) => normalizeMhs(s.mhs) === normalizedCode
-    );
-    if (!matchedStudent) return null;
+    const savedMhs = String(parsed.studentMhs || "").trim();
+    if (!savedMhs) return null;
 
+    const savedName = String(parsed.studentName || "").trim();
     const completedCount = Math.max(0, Math.min(4, Number(parsed.completedCount) || 0));
     const highestUnlockedStage = Math.max(
       1,
@@ -86,9 +66,9 @@ function loadPersistedStudentUIState(): PersistedStudentUIState | null {
     const viewMode = parsed.viewMode === "lesson" ? "lesson" : "home";
 
     return {
-      studentMhs: matchedStudent.mhs,
-      studentName: matchedStudent.fullName,
-      studentClass: "12A1",
+      studentMhs: savedMhs,
+      studentName: savedName,
+      studentClass: String(parsed.studentClass || "12A1").trim() || "12A1",
       viewMode,
       currentStage,
       highestUnlockedStage,
@@ -139,11 +119,13 @@ export default function App() {
   );
   const [transitionPopupStage, setTransitionPopupStage] = useState<PlantStage | null>(null);
 
-  // Google Sheets URL & Table modal
+  // Google Sheets URL & Table modal (chỉ lưu đúng danh sách tải trực tiếp từ Google Sheet)
   const webhookUrl = DEFAULT_WEBHOOK_URL;
   const [isWebhookModalOpen, setIsWebhookModalOpen] = useState(false);
-  const [submissions, setSubmissions] = useState<SubmissionRecord[]>(buildInitialRosterRecords);
+  const [submissions, setSubmissions] = useState<SubmissionRecord[]>([]);
+  const [hasLoadedSheet, setHasLoadedSheet] = useState(false);
   const [isRefreshingList, setIsRefreshingList] = useState(false);
+  const [isVerifyingMhs, setIsVerifyingMhs] = useState(false);
 
   // Strictly parse the Hoàn thành column value from Google Sheet (empty -> 0)
   const parseSheetCompletedColumn = (val: any): number => {
@@ -158,67 +140,76 @@ export default function App() {
     return 0;
   };
 
-  // Map rows returned from Google Sheets strictly based on Sheet content (no localStorage/session/cookie fallback)
+  // Chỉ map đúng số lượng và dữ liệu các hàng hiện có trên Google Sheet (không thêm bớt từ danh sách cố định)
   const mapSheetRowsToRoster = (rawRows: any[]): SubmissionRecord[] => {
-    const baseRoster = buildInitialRosterRecords();
     if (!Array.isArray(rawRows) || rawRows.length === 0) {
-      return baseRoster;
+      return [];
     }
 
-    const byMhs = new Map<string, any>();
+    const mapped: SubmissionRecord[] = [];
+    const seenMhs = new Set<string>();
 
     rawRows.forEach((row) => {
-      const code = normalizeMhs(String(row.mhs || row.studentCode || row.id || ""));
-      if (code) {
-        byMhs.set(code, row);
-      }
-    });
-
-    return baseRoster.map((student) => {
-      const studentCode = student.mhs || student.id;
-      const matched = byMhs.get(normalizeMhs(studentCode));
-
-      if (!matched) {
-        return {
-          ...student,
-          completedStages: 0,
-          progressStatus: "0/4",
-        };
-      }
+      if (!row || typeof row !== "object") return;
+      const rawCode = String(
+        row.mhs ?? row.studentCode ?? row.MHS ?? row.code ?? row.id ?? ""
+      ).trim();
+      const normalizedCode = normalizeMhs(rawCode);
+      if (!rawCode || !normalizedCode || normalizedCode === "MHS") return;
+      if (seenMhs.has(normalizedCode)) return;
+      seenMhs.add(normalizedCode);
 
       // Chỉ lấy giá trị cột Hoàn thành từ Google Sheet; nếu cột Hoàn thành trống thì hiển thị 0/4
       const rawCompletedField =
-        matched.completed !== undefined
-          ? matched.completed
-          : matched.hoanThanh !== undefined
-          ? matched.hoanThanh
-          : matched.completedStages !== undefined
-          ? matched.completedStages
-          : matched.completedText !== undefined
-          ? matched.completedText
+        row.completed !== undefined
+          ? row.completed
+          : row.hoanThanh !== undefined
+          ? row.hoanThanh
+          : row["Hoàn thành"] !== undefined
+          ? row["Hoàn thành"]
+          : row.completedStages !== undefined
+          ? row.completedStages
+          : row.completedText !== undefined
+          ? row.completedText
           : "";
 
       const sheetStage = parseSheetCompletedColumn(rawCompletedField);
-      const homeworkLink = String(matched.homeworkLink || "").trim();
+      const homeworkLink = String(
+        row.homeworkLink ?? row["Link bài tập về nhà"] ?? ""
+      ).trim();
 
-      return {
-        id: studentCode,
-        mhs: studentCode,
-        fullName: String(matched.fullName || student.fullName).trim(),
-        submittedAt: String(matched.submittedAt || matched.timestamp || "").trim(),
-        quizResult: String(matched.quizResult || "").trim(),
-        essayResult1: String(matched.essayResult1 || matched["essayResult 1"] || "").trim(),
-        essayResult2: String(matched.essayResult2 || matched["essayResult 2"] || "").trim(),
-        essayResult3: String(matched.essayResult3 || matched["essayResult 3"] || "").trim(),
-        essayResult: String(matched.essayResult || "").trim(),
+      mapped.push({
+        id: rawCode,
+        mhs: rawCode,
+        fullName: String(
+          row.fullName ?? row.hoTen ?? row.name ?? row["Họ tên"] ?? ""
+        ).trim(),
+        submittedAt: String(
+          row.submittedAt ?? row.timestamp ?? row["Thời gian nộp gần cuối"] ?? ""
+        ).trim(),
+        quizResult: String(
+          row.quizResult ?? row["Kết quả trắc nghiệm"] ?? ""
+        ).trim(),
+        essayResult1: String(
+          row.essayResult1 ?? row["essayResult 1"] ?? row["Câu tự luận 1"] ?? ""
+        ).trim(),
+        essayResult2: String(
+          row.essayResult2 ?? row["essayResult 2"] ?? row["Câu tự luận 2"] ?? ""
+        ).trim(),
+        essayResult3: String(
+          row.essayResult3 ?? row["essayResult 3"] ?? row["Câu tự luận 3"] ?? ""
+        ).trim(),
+        essayResult: String(row.essayResult ?? "").trim(),
         homeworkLink,
         completedStages: sheetStage,
         progressStatus: `${sheetStage}/4`,
-      };
+      });
     });
+
+    return mapped;
   };
 
-  const syncStudentsFromSheet = async () => {
+  const syncStudentsFromSheet = async (): Promise<SubmissionRecord[] | null> => {
     setIsRefreshingList(true);
     try {
       const separator = webhookUrl.includes("?") ? "&" : "?";
@@ -232,10 +223,16 @@ export default function App() {
         ? data.students
         : Array.isArray(data?.submissions)
         ? data.submissions
+        : Array.isArray(data)
+        ? data
         : [];
-      setSubmissions(mapSheetRowsToRoster(remoteList));
+      const mappedList = mapSheetRowsToRoster(remoteList);
+      setSubmissions(mappedList);
+      setHasLoadedSheet(true);
+      return mappedList;
     } catch (err) {
       console.error("Error loading data from Google Sheets:", err);
+      return null;
     } finally {
       setIsRefreshingList(false);
     }
@@ -279,22 +276,43 @@ export default function App() {
     completedCount,
   ]);
 
-  // Đồng bộ tiến trình chặng đã hoàn thành từ Google Sheet vào giao diện của học sinh đang đăng nhập
+  // Đồng bộ thông tin & tiến trình chặng đã hoàn thành từ Google Sheet vào giao diện của học sinh đang đăng nhập
   useEffect(() => {
-    if (!studentMhs.trim()) return;
+    if (!hasLoadedSheet || !studentMhs.trim()) return;
     const sheetRecord = submissions.find(
       (s) => normalizeMhs(s.mhs || s.id || "") === normalizeMhs(studentMhs)
     );
-    const sheetCompleted = sheetRecord?.completedStages ?? 0;
+    if (!sheetRecord) {
+      // Nếu mã không còn tồn tại trong danh sách Google Sheet thì tự động đăng xuất
+      try {
+        localStorage.removeItem(ACTIVE_STUDENT_UI_STORAGE_KEY);
+      } catch {
+        // ignore
+      }
+      setStudentMhs("");
+      setStudentName("");
+      setMhsInput("");
+      setCompletedCount(0);
+      setCurrentStage(1);
+      setHighestUnlockedStage(1);
+      setViewMode("home");
+      return;
+    }
+
+    if (sheetRecord.fullName && sheetRecord.fullName !== studentName) {
+      setStudentName(sheetRecord.fullName);
+    }
+
+    const sheetCompleted = sheetRecord.completedStages ?? 0;
     if (sheetCompleted > 0) {
       const sheetUnlocked = Math.max(1, Math.min(4, sheetCompleted + 1));
       setCompletedCount((prev) => Math.max(prev, sheetCompleted));
       setHighestUnlockedStage((prev) => Math.max(prev, sheetUnlocked));
     }
-  }, [submissions, studentMhs]);
+  }, [submissions, hasLoadedSheet, studentMhs, studentName]);
 
   const handleOpenSubmissionsModal = () => {
-    syncStudentsFromSheet();
+    void syncStudentsFromSheet();
     setIsWebhookModalOpen(true);
   };
 
@@ -306,47 +324,95 @@ export default function App() {
       setMhsInput(studentMhs);
     }
     setIsStudentModalOpen(true);
+    void syncStudentsFromSheet();
   };
 
-  // Live preview of matched student as user types MHS
+  // Đăng xuất tài khoản học sinh hiện tại
+  const handleLogout = () => {
+    try {
+      localStorage.removeItem(ACTIVE_STUDENT_UI_STORAGE_KEY);
+    } catch {
+      // ignore storage errors
+    }
+    setStudentMhs("");
+    setStudentName("");
+    setStudentClass("12A1");
+    setMhsInput("");
+    setFormError("");
+    setHomeworkError("");
+    setHomeworkSuccess(null);
+    setHomeworkLinkInput("");
+    setCompletedCount(0);
+    setCurrentStage(1);
+    setHighestUnlockedStage(1);
+    setTransitionPopupStage(null);
+    setIsStudentModalOpen(false);
+    setViewMode("home");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  // Live preview of matched student directly from Google Sheet list as user types MHS
   const previewMatchedStudent = useMemo(() => {
     const normalized = normalizeMhs(mhsInput);
     if (!normalized) return null;
     return (
-      STUDENT_ROSTER_12A1.find((s) => normalizeMhs(s.mhs) === normalized) ||
-      null
+      submissions.find(
+        (s) => normalizeMhs(s.mhs || s.id || "") === normalized
+      ) || null
     );
-  }, [mhsInput]);
+  }, [mhsInput, submissions]);
 
-  // Confirm Student MHS -> Validate against Google Sheet roster
-  const handleConfirmStudentInfo = (e: React.FormEvent) => {
+  // Confirm Student MHS -> Validate strictly against current Google Sheet rows
+  const handleConfirmStudentInfo = async (e: React.FormEvent) => {
     e.preventDefault();
     const normalizedInput = normalizeMhs(mhsInput);
     if (!normalizedInput) {
-      setFormError("Vui lòng nhập Mã học sinh (MHS) để xác thực.");
+      setFormError("Vui lòng nhập Mã tham gia để xác thực.");
       return;
     }
 
-    const matchedStudent = STUDENT_ROSTER_12A1.find(
-      (s) => normalizeMhs(s.mhs) === normalizedInput
+    let activeRoster = submissions;
+    let matchedStudent = activeRoster.find(
+      (s) => normalizeMhs(s.mhs || s.id || "") === normalizedInput
     );
+
+    // Nếu chưa tìm thấy trong danh sách đã tải, tải mới trực tiếp từ Google Sheet để kiểm tra
+    if (!matchedStudent) {
+      setIsVerifyingMhs(true);
+      const refreshedList = await syncStudentsFromSheet();
+      setIsVerifyingMhs(false);
+      if (refreshedList) {
+        activeRoster = refreshedList;
+        matchedStudent = activeRoster.find(
+          (s) => normalizeMhs(s.mhs || s.id || "") === normalizedInput
+        );
+      } else {
+        setFormError(
+          "Không thể kết nối tới Google Sheet để kiểm tra mã. Vui lòng thử lại."
+        );
+        return;
+      }
+    }
 
     if (!matchedStudent) {
       setFormError(
-        "Mã học sinh không trùng khớp với danh sách lớp 12A1 trên Google Sheet (Ví dụ hợp lệ: 12A1TVO1 đến 12A1TVO44)."
+        "Mã tham gia không tồn tại trong danh sách hiện có trên Google Sheet. Vui lòng kiểm tra lại."
       );
       return;
     }
 
+    const matchedMhs = matchedStudent.mhs || matchedStudent.id;
+    const matchedFullName = matchedStudent.fullName || matchedMhs;
+
     const isSameStudent =
       Boolean(studentMhs) &&
-      normalizeMhs(studentMhs) === normalizeMhs(matchedStudent.mhs);
+      normalizeMhs(studentMhs) === normalizeMhs(matchedMhs);
 
     setFormError("");
     setHomeworkError("");
-    setStudentMhs(matchedStudent.mhs);
-    setMhsInput(matchedStudent.mhs);
-    setStudentName(matchedStudent.fullName);
+    setStudentMhs(matchedMhs);
+    setMhsInput(matchedMhs);
+    setStudentName(matchedFullName);
     setStudentClass("12A1");
     setIsStudentModalOpen(false);
 
@@ -354,8 +420,8 @@ export default function App() {
       const pendingLink = homeworkLinkInput.trim();
       if (pendingLink) {
         void submitHomeworkForStudent(
-          matchedStudent.mhs,
-          matchedStudent.fullName,
+          matchedMhs,
+          matchedFullName,
           pendingLink
         );
       }
@@ -363,10 +429,7 @@ export default function App() {
     }
 
     // Khởi tạo tiến trình mở khóa dựa trên dữ liệu đã lưu của học sinh trên Google Sheet
-    const sheetRecord = submissions.find(
-      (s) => normalizeMhs(s.mhs || s.id || "") === normalizeMhs(matchedStudent.mhs)
-    );
-    const sheetCompleted = sheetRecord?.completedStages ?? 0;
+    const sheetCompleted = matchedStudent.completedStages ?? 0;
     const nextCompletedCount = isSameStudent
       ? Math.max(completedCount, sheetCompleted)
       : sheetCompleted;
@@ -615,8 +678,8 @@ export default function App() {
           })}
         </nav>
 
-        {/* Zone 3: 1 primary action (div#root > div > header > div > button) */}
-        <div className="flex items-center shrink-0">
+        {/* Zone 3: Student Account & Logout Action */}
+        <div className="flex items-center gap-2 shrink-0">
           <button
             type="button"
             onClick={() => handleOpenMhsModal("lesson")}
@@ -629,6 +692,18 @@ export default function App() {
                 : "Nhập mã học sinh (12A1)"}
             </span>
           </button>
+
+          {studentMhs && (
+            <button
+              type="button"
+              onClick={handleLogout}
+              title="Đăng xuất tài khoản hiện tại"
+              className="neo-btn px-3 py-2 text-xs font-bold bg-white hover:bg-rose-50 text-rose-700 whitespace-nowrap shrink-0 cursor-pointer flex items-center gap-1.5"
+            >
+              <LogOut className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Đăng xuất</span>
+            </button>
+          )}
         </div>
       </header>
 
@@ -712,15 +787,6 @@ export default function App() {
                     Học sinh thực hiện và dán đường dẫn bài làm (Canva, Google Docs, Google Drive, OneDrive,...)
                   </p>
                 </div>
-
-                <a
-                  href="./assets/aistudio/T__LI_U__I_N_T_CH__I_N_C__00faaa14.pdf"
-                  download="File_BTVN_Dien_Tich_Dien_Co.pdf"
-                  className="neo-btn px-4 py-2.5 bg-[#FAF8F5] hover:bg-amber-100 text-xs font-bold text-slate-900 inline-flex items-center gap-2 whitespace-nowrap shrink-0 self-start md:self-auto"
-                >
-                  <Download className="w-4 h-4" />
-                  <span>Download File BTVN</span>
-                </a>
               </div>
 
               {/* Trạng thái xác thực Mã học sinh (MHS) */}
@@ -732,13 +798,11 @@ export default function App() {
                     </div>
                     <div>
                       <h3 className="text-sm font-bold text-slate-900">
-                        Yêu cầu nhập Mã học sinh (MHS) trước khi gửi link bài tập về nhà
+                        Yêu cầu nhập Mã tham gia trước khi gửi link bài tập về nhà
                       </h3>
                       <p className="text-xs text-slate-700 mt-0.5 leading-relaxed">
-                        Bạn cần xác thực Mã học sinh lớp 12A1 (từ{" "}
-                        <code className="font-mono font-bold">12A1TVO1</code> đến{" "}
-                        <code className="font-mono font-bold">12A1TVO44</code>) để hệ thống mở khóa
-                        gửi link bài tập về nhà vào đúng vị trí hàng của bạn trên Google Sheet.
+                        Bạn cần xác thực Mã đã được cấp trong danh sách trên Google Sheet để hệ
+                        thống mở khóa gửi link bài tập về nhà vào đúng vị trí hàng của bạn.
                       </p>
                     </div>
                   </div>
@@ -765,13 +829,24 @@ export default function App() {
                     </div>
                   </div>
 
-                  <button
-                    type="button"
-                    onClick={() => handleOpenMhsModal("homework")}
-                    className="text-xs font-bold text-slate-800 underline underline-offset-2 hover:text-amber-700 cursor-pointer"
-                  >
-                    Đổi Mã học sinh khác
-                  </button>
+                  <div className="flex items-center gap-3">
+                    <button
+                      type="button"
+                      onClick={() => handleOpenMhsModal("homework")}
+                      className="text-xs font-bold text-slate-800 underline underline-offset-2 hover:text-amber-700 cursor-pointer"
+                    >
+                      Đổi Mã học sinh khác
+                    </button>
+                    <span aria-hidden="true" className="text-slate-400">·</span>
+                    <button
+                      type="button"
+                      onClick={handleLogout}
+                      className="text-xs font-bold text-rose-700 underline underline-offset-2 hover:text-rose-900 cursor-pointer inline-flex items-center gap-1"
+                    >
+                      <LogOut className="w-3.5 h-3.5" />
+                      <span>Đăng xuất</span>
+                    </button>
+                  </div>
                 </div>
               )}
 
@@ -887,13 +962,14 @@ export default function App() {
 
             {currentStage === 4 && (
               <Section4Exercises
+                key={studentMhs || "guest"}
                 onPrev={() => handleSelectStage(3, false)}
                 onGoHome={() => {
                   setViewMode("home");
                   window.scrollTo({ top: 0, behavior: "smooth" });
                 }}
-                studentMhs={studentMhs || "12A1TVO1"}
-                studentName={studentName || "Nguyễn Trường An"}
+                studentMhs={studentMhs}
+                studentName={studentName}
                 studentClass={studentClass || "12A1"}
                 webhookUrl={webhookUrl}
                 onOpenWebhookModal={handleOpenSubmissionsModal}
@@ -962,13 +1038,13 @@ export default function App() {
                 </div>
                 <div>
                   <p className="text-xs font-mono font-bold text-slate-600">
-                    XÁC THỰC HỌC SINH LỚP 12A1
+                    XÁC THỰC TRUY CẬP LỚP 12A1
                   </p>
                   <h2
                     id="student-modal-title"
                     className="text-xl font-bold text-slate-900 font-serif-display"
                   >
-                    Nhập Mã Học Sinh (MHS)
+                    Nhập Mã Tham Gia
                   </h2>
                 </div>
               </div>
@@ -976,20 +1052,13 @@ export default function App() {
               <p className="text-xs sm:text-sm text-slate-700 leading-relaxed mb-5">
                 {mhsModalTarget === "homework" ? (
                   <>
-                    Nhập <strong>Mã học sinh (MHS)</strong> trong danh sách lớp{" "}
-                    <strong>12A1</strong> (từ{" "}
-                    <code className="font-mono font-bold bg-amber-100 px-1">12A1TVO1</code> đến{" "}
-                    <code className="font-mono font-bold bg-amber-100 px-1">12A1TVO44</code>) để mở
+                    Nhập <strong>Mã truy cập</strong> có trong danh sách trên Google Sheet để mở
                     khóa chức năng gửi <strong>Link bài tập về nhà</strong> vào đúng hàng của bạn.
                   </>
                 ) : (
                   <>
-                    Nhập <strong>Mã học sinh (MHS)</strong> trong danh sách lớp{" "}
-                    <strong>12A1</strong> (từ{" "}
-                    <code className="font-mono font-bold bg-amber-100 px-1">12A1TVO1</code> đến{" "}
-                    <code className="font-mono font-bold bg-amber-100 px-1">12A1TVO44</code>). Nếu
-                    mã trùng khớp với Google Sheet, hệ thống sẽ chuyển ngay vào{" "}
-                    <strong>Phần 1 của bài học</strong>.
+                    Nhập <strong>Mã truy cập</strong> đã được cấp trong danh sách lớp{" "}
+                    <strong>12A1</strong>
                   </>
                 )}
               </p>
@@ -1000,7 +1069,7 @@ export default function App() {
                     htmlFor="student-mhs"
                     className="block text-xs font-bold text-slate-900 mb-1.5"
                   >
-                    Mã học sinh (MHS) *
+                    Mã truy cập*
                   </label>
                   <input
                     id="student-mhs"
@@ -1011,7 +1080,7 @@ export default function App() {
                       setMhsInput(e.target.value.toUpperCase());
                       if (formError) setFormError("");
                     }}
-                    placeholder="Ví dụ: 12A1TVO1"
+                    placeholder="Nhập mã truy cập của bạn..."
                     className="w-full px-3.5 py-2.5 text-sm font-mono font-bold uppercase bg-white border-2 border-slate-900 focus:outline-none focus:bg-amber-50"
                     autoFocus
                   />
@@ -1022,10 +1091,11 @@ export default function App() {
                   <div className="p-3 bg-emerald-50 border-2 border-emerald-800 flex items-center gap-2.5 text-xs text-emerald-950">
                     <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
                     <div>
-                      <span className="font-mono font-bold">{previewMatchedStudent.mhs}</span>
+                      <span className="font-mono font-bold">
+                        {previewMatchedStudent.mhs || previewMatchedStudent.id}
+                      </span>
                       <span className="mx-1.5">·</span>
                       <span className="font-bold">{previewMatchedStudent.fullName}</span>
-                      <span className="ml-1.5 text-emerald-800">(Lớp 12A1)</span>
                     </div>
                   </div>
                 )}
@@ -1046,19 +1116,21 @@ export default function App() {
                   </button>
                   <button
                     type="submit"
-                    className="neo-btn flex-[2] py-2.5 px-5 bg-amber-300 hover:bg-amber-400 text-sm font-bold text-slate-900 flex items-center justify-center gap-2 cursor-pointer"
+                    disabled={isVerifyingMhs}
+                    className="neo-btn flex-[2] py-2.5 px-5 bg-amber-300 hover:bg-amber-400 disabled:opacity-60 text-sm font-bold text-slate-900 flex items-center justify-center gap-2 cursor-pointer"
                   >
                     <BookOpen className="w-4 h-4" />
                     <span>
-                      {mhsModalTarget === "homework"
-                        ? "Xác nhận Mã HS để nộp BTVN"
-                        : "Vào Phần 1 bài học"}
+                      {isVerifyingMhs
+                        ? "Đang kiểm tra trên Sheet..."
+                        : mhsModalTarget === "homework"
+                        ? "Xác nhận Mã để nộp BTVN"
+                        : "Vào bài học"}
                     </span>
                   </button>
                 </div>
 
-                <div className="pt-3 border-t border-slate-200 flex items-center justify-between text-xs text-slate-600">
-                  <span>Chưa nhớ Mã học sinh của mình?</span>
+                <div className="pt-3 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-600">
                   <button
                     type="button"
                     onClick={() => {
@@ -1069,6 +1141,16 @@ export default function App() {
                   >
                     Tra cứu DSHS 12A1 trên Sheet
                   </button>
+                  {studentMhs && (
+                    <button
+                      type="button"
+                      onClick={handleLogout}
+                      className="font-bold text-rose-700 underline underline-offset-2 hover:text-rose-900 cursor-pointer inline-flex items-center gap-1"
+                    >
+                      <LogOut className="w-3.5 h-3.5" />
+                      <span>Đăng xuất ({studentMhs})</span>
+                    </button>
+                  )}
                 </div>
               </form>
             </motion.div>

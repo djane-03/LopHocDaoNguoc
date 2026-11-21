@@ -216,9 +216,9 @@ export const RECOGNITION_SIGNS: RecognitionSign[] = [
   },
   {
     step: "Dấu hiệu 02",
-    title: "Độ chênh giữa nghĩa bề mặt (nghĩa đen) và nghĩa hàm ẩn",
+    title: "Mang tính hàm xúc",
     description:
-      "Các điển luôn mang tính hàm súc cao: chỉ một vài từ ngữ nhưng gợi ra cả một hệ thống liên tưởng văn hóa rộng lớn.",
+      "Các điển luôn mang tính hàm súc cao. Chỉ một vài từ ngữ nhưng gợi ra cả một hệ thống liên tưởng văn hóa rộng lớn.",
     keyTip:
       "Hãy đối chiếu nghĩa đen với văn cảnh. Nhận ra sự khác biệt giữa nghĩa bề mặt và nghĩa văn hóa hàm ẩn là cách hiệu quả nhất để xác định điển cố.",
     illustrationExample:
@@ -226,7 +226,7 @@ export const RECOGNITION_SIGNS: RecognitionSign[] = [
   },
   {
     step: "Dấu hiệu 03",
-    title: "Đòi hỏi quá trình giải mã văn hóa từ người đọc",
+    title: "Đòi hỏi quá trình giải mã từ người đọc",
     description:
       "Khác với hình ảnh miêu tả thông thường, ý nghĩa của điển không nằm hoàn toàn trên mặt chữ mà phụ thuộc vào vốn hiểu biết văn hóa của người tiếp nhận.",
     keyTip:
@@ -532,65 +532,18 @@ export function normalizeMhs(raw: string): string {
 
 export const GOOGLE_APPS_SCRIPT_CODE = `/**
  * GOOGLE APPS SCRIPT (Code.gs)
- * Danh sách học sinh lớp 12A1 (44 học sinh) & Lưu kết quả theo đúng dòng Mã học sinh (MHS)
+ * Đọc & cập nhật trực tiếp theo đúng danh sách hiện có trên Google Sheets (không tự chèn thêm danh sách cứng)
  * Cấu trúc các cột trên Google Sheets:
  * Cột A (1): MHS
  * Cột B (2): Họ tên
  * Cột C (3): Thời gian nộp gần cuối
- * Cột D (4): Hoàn thành (lưu trữ số phần đã học, ví dụ: 4/4 phần)
+ * Cột D (4): Hoàn thành (chỉ ghi 1, 2, 3, 4)
  * Cột E (5): Kết quả trắc nghiệm (lưu trữ kết quả trường quizResult)
  * Cột F (6): Câu tự luận 1 (lưu trữ thông tin trường essayResult1 / essayResult 1)
  * Cột G (7): Câu tự luận 2 (lưu trữ thông tin trường essayResult2 / essayResult 2)
  * Cột H (8): Câu tự luận 3 (lưu trữ thông tin trường essayResult3 / essayResult 3)
  * Cột I (9): Link bài tập về nhà (lưu trữ thông tin trường homeworkLink)
  */
-
-var ROSTER_12A1 = [
-  ["12A1TVO1", "Nguyễn Trường An"],
-  ["12A1TVO2", "Lương Thị Vân Anh"],
-  ["12A1TVO3", "Nguyễn Trần Thái Anh"],
-  ["12A1TVO4", "Đặng Hồng Ân"],
-  ["12A1TVO5", "Nguyễn Trung Dũng"],
-  ["12A1TVO6", "Bùi Ngọc Thùy Dương"],
-  ["12A1TVO7", "Nguyễn Phong Đạt"],
-  ["12A1TVO8", "Lê Đỗ Minh Hiển"],
-  ["12A1TVO9", "Ngô Hoàng Huân"],
-  ["12A1TVO10", "Phạm Tuấn Hưng"],
-  ["12A1TVO11", "Võ Trần Hoàng Khải"],
-  ["12A1TVO12", "Lê Nguyễn Duy Khang"],
-  ["12A1TVO13", "Trịnh Nguyễn Kim Khánh"],
-  ["12A1TVO14", "Phạm Đăng Khôi"],
-  ["12A1TVO15", "Lê Thành Lễ"],
-  ["12A1TVO16", "Trần Phúc Ngân"],
-  ["12A1TVO17", "Trần Thị Kim Ngân"],
-  ["12A1TVO18", "Huỳnh Thị Bảo Ngọc"],
-  ["12A1TVO19", "Nguyễn Bích Ngọc"],
-  ["12A1TVO20", "Lê Ngọc Thảo Nguyên"],
-  ["12A1TVO21", "Lưu Trần Huỳnh Như"],
-  ["12A1TVO22", "Võ Ngọc Quỳnh Như"],
-  ["12A1TVO23", "Trần Thanh Thu Nhựt"],
-  ["12A1TVO24", "Phạm Ngọc Yến Phi"],
-  ["12A1TVO25", "Nguyễn Nhật Phong"],
-  ["12A1TVO26", "Lê Hoàng Phúc"],
-  ["12A1TVO27", "Nguyễn Xuân Phúc"],
-  ["12A1TVO28", "Trần Thị Nhã Phụng"],
-  ["12A1TVO29", "Trần Ngọc Lan Phương"],
-  ["12A1TVO30", "Thân Nhã Quyên"],
-  ["12A1TVO31", "Nguyễn Thanh Sang"],
-  ["12A1TVO32", "Nguyễn Phát Tài"],
-  ["12A1TVO33", "Phạm Hoàng Thạch Thảo"],
-  ["12A1TVO34", "Nguyễn Minh Thư"],
-  ["12A1TVO35", "Nguyễn Ngọc Hương Uyên"],
-  ["12A1TVO36", "Phan Thị Phương Uyên"],
-  ["12A1TVO37", "Nguyễn Hoàng Lê Vi"],
-  ["12A1TVO38", "Trần Thiên Vương"],
-  ["12A1TVO39", "Nguyễn Thanh Tuyết Vy"],
-  ["12A1TVO40", "Nguyễn Thảo Vy"],
-  ["12A1TVO41", "Phạm Hoàng Phương Vy"],
-  ["12A1TVO42", "Võ Tường Vy"],
-  ["12A1TVO43", "Nguyễn Ngọc Như Ý"],
-  ["12A1TVO44", "Trần Ngọc Như Ý"]
-];
 
 function normalizeMhs(code) {
   var cleaned = String(code || "").trim().toUpperCase().replace(/\\s+/g, "");
@@ -607,58 +560,25 @@ function parseStageCount(val) {
   return 0;
 }
 
-function ensureRoster12A1(sheet) {
+function ensureSheetHeaders(sheet) {
   if (!sheet) {
     sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
   }
 
-  var headers = [
-    "MHS",
-    "Họ tên",
-    "Thời gian nộp gần cuối",
-    "Hoàn thành",
-    "Kết quả trắc nghiệm",
-    "Câu tự luận 1",
-    "Câu tự luận 2",
-    "Câu tự luận 3",
-    "Link bài tập về nhà"
-  ];
-
-  var lastRow = sheet.getLastRow();
-  if (lastRow === 0) {
+  if (sheet.getLastRow() === 0) {
+    var headers = [
+      "MHS",
+      "Họ tên",
+      "Thời gian nộp gần cuối",
+      "Hoàn thành",
+      "Kết quả trắc nghiệm",
+      "Câu tự luận 1",
+      "Câu tự luận 2",
+      "Câu tự luận 3",
+      "Link bài tập về nhà"
+    ];
     sheet.getRange(1, 1, 1, 9).setValues([headers]);
     sheet.getRange(1, 1, 1, 9).setFontWeight("bold").setBackground("#FEF3C7");
-
-    var initialRows = ROSTER_12A1.map(function(item) {
-      return [item[0], item[1], "", "", "", "", "", "", ""];
-    });
-    sheet.getRange(2, 1, initialRows.length, 9).setValues(initialRows);
-    return;
-  }
-
-  sheet.getRange(1, 1, 1, 9).setValues([headers]);
-  sheet.getRange(1, 1, 1, 9).setFontWeight("bold").setBackground("#FEF3C7");
-
-  var existingCodes = {};
-  lastRow = sheet.getLastRow();
-  if (lastRow > 1) {
-    var colA = sheet.getRange(2, 1, lastRow - 1, 1).getValues();
-    for (var i = 0; i < colA.length; i++) {
-      var code = normalizeMhs(colA[i][0]);
-      if (code) existingCodes[code] = i + 2;
-    }
-  }
-
-  var missingRows = [];
-  for (var j = 0; j < ROSTER_12A1.length; j++) {
-    var mhs = ROSTER_12A1[j][0];
-    if (!existingCodes[mhs]) {
-      missingRows.push([mhs, ROSTER_12A1[j][1], "", "", "", "", "", "", ""]);
-    }
-  }
-
-  if (missingRows.length > 0) {
-    sheet.getRange(sheet.getLastRow() + 1, 1, missingRows.length, 9).setValues(missingRows);
   }
 }
 
@@ -667,7 +587,7 @@ function doPost(e) {
   lock.tryLock(10000);
   try {
     var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-    ensureRoster12A1(sheet);
+    ensureSheetHeaders(sheet);
 
     var rawContents = e.postData ? e.postData.contents : "{}";
     var data = JSON.parse(rawContents);
@@ -676,15 +596,17 @@ function doPost(e) {
     var timestamp = data.submittedAt || new Date().toLocaleString("vi-VN");
 
     var lastRow = sheet.getLastRow();
-    var values = sheet.getRange(2, 1, lastRow - 1, 9).getValues();
     var matchedRowIndex = -1;
     var existingRow = null;
 
-    for (var i = 0; i < values.length; i++) {
-      if (normalizeMhs(values[i][0]) === targetMhs) {
-        matchedRowIndex = i + 2;
-        existingRow = values[i];
-        break;
+    if (lastRow > 1) {
+      var values = sheet.getRange(2, 1, lastRow - 1, 9).getValues();
+      for (var i = 0; i < values.length; i++) {
+        if (normalizeMhs(values[i][0]) === targetMhs) {
+          matchedRowIndex = i + 2;
+          existingRow = values[i];
+          break;
+        }
       }
     }
 
@@ -692,7 +614,7 @@ function doPost(e) {
       return ContentService
         .createTextOutput(JSON.stringify({
           status: "error",
-          message: "Không tìm thấy Mã học sinh " + targetMhs + " trong danh sách 12A1."
+          message: "Không tìm thấy Mã " + targetMhs + " trong danh sách hiện có trên Google Sheet."
         }))
         .setMimeType(ContentService.MimeType.JSON);
     }
@@ -735,13 +657,6 @@ function doPost(e) {
     var nextCompletedValue = finalStages > 0 ? finalStages : "";
 
     // Ghi vào đúng dòng của Mã học sinh tại Cột C..I (cột 3 đến cột 9):
-    // Cột 3 (C): Thời gian nộp gần cuối
-    // Cột 4 (D): Hoàn thành (chỉ ghi 1, 2, 3, 4)
-    // Cột 5 (E): Kết quả trắc nghiệm (quizResult)
-    // Cột 6 (F): Câu tự luận 1 (essayResult1)
-    // Cột 7 (G): Câu tự luận 2 (essayResult2)
-    // Cột 8 (H): Câu tự luận 3 (essayResult3)
-    // Cột 9 (I): Link bài tập về nhà (homeworkLink)
     sheet.getRange(matchedRowIndex, 3, 1, 7).setValues([[
       timestamp,
       nextCompletedValue,
@@ -777,7 +692,7 @@ function doPost(e) {
 function doGet(e) {
   try {
     var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-    ensureRoster12A1(sheet);
+    ensureSheetHeaders(sheet);
 
     var lastRow = sheet.getLastRow();
     var students = [];
@@ -786,8 +701,9 @@ function doGet(e) {
       var values = sheet.getRange(2, 1, lastRow - 1, 9).getValues();
       for (var i = 0; i < values.length; i++) {
         var row = values[i];
-        var mhs = normalizeMhs(row[0]);
-        if (mhs) {
+        var rawMhs = String(row[0] || "").trim();
+        var mhs = normalizeMhs(rawMhs);
+        if (rawMhs && mhs) {
           var completedStr = row[3] !== undefined && row[3] !== null ? String(row[3]).trim() : "";
           var quizVal = row[4] ? String(row[4]).trim() : "";
           var essay1Val = row[5] ? String(row[5]).trim() : "";

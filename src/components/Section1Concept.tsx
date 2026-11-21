@@ -87,8 +87,7 @@ export const Section1Concept: React.FC<Section1ConceptProps> = ({ onNext }) => {
               <p className="text-sm sm:text-base text-slate-800 leading-relaxed">
                 Là những <strong>tích truyện xưa</strong>, đây thường là những câu chuyện kể về
                 những người anh hùng, những tấm gương hiếu thảo, chính trực, đạo đức hoặc những
-                truyện có tính triết lý nhân văn trong lịch sử; những câu thơ, câu văn cổ xưa kinh
-                điển xuất hiện trong các tác phẩm...
+                truyện có tính triết lý nhân văn trong lịch sử.
               </p>
             </div>
 
@@ -140,7 +139,7 @@ export const Section1Concept: React.FC<Section1ConceptProps> = ({ onNext }) => {
                 Là những <strong>chuyện xưa tích cũ</strong> lấy trong văn hóa xưa nay của nhân
                 loại. Đó có thể là tên một câu chuyện, tên một vùng đất hay tên nhân vật, hoặc một
                 hình tượng văn học đầy chất thơ hay đậm chất bi, chất hài chứa đựng bao triết lý sâu
-                xa về cuộc sống muôn màu muôn vẻ...
+                xa về cuộc sống muôn màu muôn vẻ, cũng có thể là một câu nói, một ý văn cổ.
               </p>
             </div>
 
@@ -182,7 +181,9 @@ export const Section1Concept: React.FC<Section1ConceptProps> = ({ onNext }) => {
         </h3>
         <p className="mt-2 text-sm sm:text-base text-slate-800 leading-relaxed">
           Điển cố thường liên quan đến tên người, địa danh, câu nói, hoặc hình ảnh đã trở thành biểu
-          tượng trong văn hóa hoặc văn học cổ. Trong văn hoá truyền thống, người ta cho rằng{" "}
+          tượng trong văn hóa hoặc văn học cổ. Chúng giúp tác phẩm văn học trở nên giàu hình tượng và chiều sâu tư tưởng.
+          <br/>
+          Trong văn hoá truyền thống, người ta cho rằng{" "}
           <strong>nhìn người chính là một cách để tự soi xét mình</strong>, rằng lấy những điển tích
           kinh điển trong lịch sử làm tham chiếu để luận giải là một cách rất tốt để làm sáng tỏ cái
           ý mà mình muốn biểu đạt. Do vậy, việc nhắc đến điển cố trong thơ và văn được sử dụng

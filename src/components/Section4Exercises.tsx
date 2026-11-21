@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   ArrowLeft,
   CheckCircle2,
   Send,
   FileSpreadsheet,
-  Download,
   X,
 } from "lucide-react";
 import { QUICK_QUIZ_QUESTIONS, ESSAY_PROMPTS } from "../data/lessonData";
@@ -47,6 +46,18 @@ export const Section4Exercises: React.FC<Section4ExercisesProps> = ({
   const [isCompletionPopupOpen, setIsCompletionPopupOpen] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
+  // Reset hoàn toàn các ô đáp án khi đổi tài khoản / phiên đăng nhập mới (không giữ dữ liệu cũ)
+  useEffect(() => {
+    setQuizAnswers({});
+    setEssayAnswers({
+      essay1: "",
+      essay2: "",
+      essay3: "",
+    });
+    setSubmitError(null);
+    setIsCompletionPopupOpen(false);
+  }, [studentMhs]);
+
   const answeredCount = Object.keys(quizAnswers).length;
   const correctQuizCount = QUICK_QUIZ_QUESTIONS.reduce((acc, q) => {
     return acc + (quizAnswers[q.id] === q.correctIndex ? 1 : 0);
@@ -60,44 +71,51 @@ export const Section4Exercises: React.FC<Section4ExercisesProps> = ({
     setEssayAnswers((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleSubmitAssignment = async (e: React.FormEvent) => {
+  const handleSubmitAssignment = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isSubmitting) return;
+    if (!studentMhs.trim()) {
+      setSubmitError(
+        "Chưa xác thực Mã tham gia. Vui lòng nhập mã học sinh từ danh sách Google Sheet trước khi gửi bài."
+      );
+      return;
+    }
     setIsSubmitting(true);
     setSubmitError(null);
 
-    // 1. Cột Kết quả trắc nghiệm (Điểm số + Chi tiết Bài tập 1 - 4)
+    // 1. Cột Kết quả trắc nghiệm: chỉ lấy đúng đáp án học sinh vừa chọn trên màn hình hiện tại
     const quizLines = QUICK_QUIZ_QUESTIONS.map((q) => {
       const selectedIdx = quizAnswers[q.id];
-      const selectedText =
-        selectedIdx !== undefined ? q.options[selectedIdx] : "Chưa chọn";
+      if (selectedIdx === undefined) {
+        return `BT ${q.number}: Chưa chọn`;
+      }
+      const selectedText = q.options[selectedIdx];
       const isRight = selectedIdx === q.correctIndex ? "Đúng" : "Sai";
       return `BT ${q.number}: ${selectedText} (${isRight})`;
     }).join("\n");
     const quizResult = `Điểm: ${correctQuizCount}/${QUICK_QUIZ_QUESTIONS.length} câu\n${quizLines}`;
 
-    // 2. Các cột Câu tự luận 1, Câu tự luận 2, Câu tự luận 3
-    const essayResult1 =
-      essayAnswers.essay1.trim() ||
-      "Điển cố 'ngọc Mỵ Nương' và 'cỏ Ngu mĩ' khẳng định phẩm hạnh trong sạch, thủy chung của Vũ Nương.";
-    const essayResult2 =
-      essayAnswers.essay2.trim() ||
-      "Nước cành dương (nước phép cứu bệnh); Mạt cưa mướp đắng (phường bịp bợm gặp nhau); Mắt xanh (quý trọng người tài).";
-    const essayResult3 =
-      essayAnswers.essay3.trim() ||
-      "Đoạn văn vận dụng điển cố 'ba thu', 'Sâm Thương', 'Ngưu Lang - Chức Nữ' khắc họa nỗi nhớ và lòng chung thủy của Thúy Kiều.";
+    // 2. Các cột Câu tự luận 1, 2, 3: chỉ đọc trực tiếp giá trị hiện có trong các ô input của form (không dùng dữ liệu mẫu hay session/cookie cũ)
+    const formData = new FormData(e.currentTarget);
+    const essayResult1 = String(formData.get("essay1") ?? "").trim();
+    const essayResult2 = String(formData.get("essay2") ?? "").trim();
+    const essayResult3 = String(formData.get("essay3") ?? "").trim();
 
     const essayResult = [
-      `[Tự luận 1 - Nam Xương]: ${essayResult1}`,
-      `[Tự luận 2 - 3 Điển tích]: ${essayResult2}`,
-      `[Tự luận 3 - Đoạn văn 7-8 câu]: ${essayResult3}`,
-    ].join("\n");
+      essayResult1 ? `[Tự luận 1 - Nam Xương]: ${essayResult1}` : "",
+      essayResult2 ? `[Tự luận 2 - 3 Điển tích]: ${essayResult2}` : "",
+      essayResult3 ? `[Tự luận 3 - Đoạn văn 7-8 câu]: ${essayResult3}` : "",
+    ]
+      .filter(Boolean)
+      .join("\n");
 
     const submittedAt = new Date().toLocaleString("vi-VN");
+    const trimmedMhs = studentMhs.trim();
+    const trimmedName = studentName.trim();
     const payload = {
-      mhs: studentMhs || "12A1TVO1",
-      studentCode: studentMhs || "12A1TVO1",
-      fullName: studentName || "Nguyễn Trường An",
+      mhs: trimmedMhs,
+      studentCode: trimmedMhs,
+      fullName: trimmedName,
       className: studentClass || "12A1",
       submittedAt,
       completedStages: 4,
@@ -169,12 +187,12 @@ export const Section4Exercises: React.FC<Section4ExercisesProps> = ({
               PHẦN 04 · GIAI ĐOẠN 4: ĐƠM HOA 🌻
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 font-serif-display">
-              4/ Bài tập vận dụng & Thực hành Giải mã
+              4/ Bài tập vận dụng
             </h2>
             <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
               Vận dụng toàn bộ kiến thức đã học để hoàn thành 4 bài tập nhận diện nhanh và 3 bài tập
               phân tích – viết đoạn văn sáng tạo, sau đó nhấn <strong>"Gửi bài tập"</strong> để lưu
-              kết quả vào Google Sheets.
+              kết quả.
             </p>
           </div>
           <div className="w-20 h-20 shrink-0 flex items-center justify-center bg-amber-200 border-2 border-slate-900 shadow-[3px_3px_0px_0px_#0f172a]">
@@ -259,7 +277,11 @@ export const Section4Exercises: React.FC<Section4ExercisesProps> = ({
       </div>
 
       {/* Part B: Bài tập Tự luận & Sáng tạo (Bài tập 5 trong tư liệu) */}
-      <form onSubmit={handleSubmitAssignment} className="space-y-8">
+      <form
+        onSubmit={handleSubmitAssignment}
+        autoComplete="off"
+        className="space-y-8"
+      >
         <div className="neo-card p-6 sm:p-7 bg-white space-y-6">
           <div className="border-b-2 border-slate-900 pb-4">
             <div className="text-xs font-mono font-bold text-emerald-800">
@@ -301,8 +323,10 @@ export const Section4Exercises: React.FC<Section4ExercisesProps> = ({
                 <p className="text-sm font-bold text-slate-900">{item.question}</p>
 
                 <textarea
+                  name={item.id}
                   rows={4}
-                  value={essayAnswers[item.id] || ""}
+                  autoComplete="off"
+                  value={essayAnswers[item.id] ?? ""}
                   onChange={(e) => handleEssayChange(item.id, e.target.value)}
                   placeholder={item.placeholder}
                   className="w-full p-3.5 text-sm bg-white border-2 border-slate-900 focus:outline-none focus:bg-amber-50/40 leading-relaxed"
@@ -331,13 +355,13 @@ export const Section4Exercises: React.FC<Section4ExercisesProps> = ({
             <div className="p-3.5 bg-white border-2 border-slate-900">
               <div className="text-[11px] font-mono text-slate-500">MÃ HỌC SINH (MHS)</div>
               <div className="text-sm font-mono font-bold text-slate-900 mt-1">
-                {studentMhs || "12A1TVO1"}
+                {studentMhs || "Chưa xác thực"}
               </div>
             </div>
             <div className="p-3.5 bg-white border-2 border-slate-900">
               <div className="text-[11px] font-mono text-slate-500">HỌ VÀ TÊN HỌC SINH</div>
               <div className="text-sm font-bold text-slate-900 mt-1 truncate">
-                {studentName || "Nguyễn Trường An"}
+                {studentName || "—"}
               </div>
             </div>
           </div>
@@ -415,14 +439,6 @@ export const Section4Exercises: React.FC<Section4ExercisesProps> = ({
             </p>
 
             <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
-              <a
-                href="./assets/aistudio/T__LI_U__I_N_T_CH__I_N_C__00faaa14.pdf"
-                download="Bai_Tap_Ve_Nha_Dien_Tich_Dien_Co.pdf"
-                className="neo-btn w-full sm:w-auto px-6 py-3 bg-amber-300 hover:bg-amber-400 text-slate-900 font-bold text-sm flex items-center justify-center gap-2 cursor-pointer"
-              >
-                <Download className="w-4 h-4" />
-                <span>Download bài tập về nhà</span>
-              </a>
 
               <button
                 type="button"

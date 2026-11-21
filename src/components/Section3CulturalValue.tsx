@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ArrowLeft, ArrowRight, Compass, Eye, BookMarked } from "lucide-react";
+import { ArrowLeft, ArrowRight, Compass, BookMarked } from "lucide-react";
 import { RECOGNITION_SIGNS, ALLUSION_GLOSSARY } from "../data/lessonData";
 import { LeafyDoodle } from "./DoodleIllustrations";
 
@@ -13,7 +13,6 @@ export const Section3CulturalValue: React.FC<Section3CulturalValueProps> = ({
   onNext,
 }) => {
   const [filterCategory, setFilterCategory] = useState<"ALL" | "Điển tích" | "Điển cố">("ALL");
-  const [layerMode, setLayerMode] = useState<"surface" | "cultural">("cultural");
 
   const filteredGlossary = ALLUSION_GLOSSARY.filter((item) => {
     return filterCategory === "ALL" || item.category === filterCategory;
@@ -42,125 +41,60 @@ export const Section3CulturalValue: React.FC<Section3CulturalValueProps> = ({
         </div>
       </div>
 
-      {/* Cultural Value Two-Column Analysis */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-        <div className="lg:col-span-7 neo-card p-6 sm:p-7 bg-white flex flex-col justify-between space-y-4">
-          <div className="space-y-3">
-            <div className="text-xs font-mono font-bold text-slate-500">
-              3/ GIÁ TRỊ VĂN HÓA CỦA ĐIỂN TÍCH, ĐIỂN CỐ
-            </div>
-            <h3 className="text-xl font-bold text-slate-900 font-serif-display">
-              Nơi lưu giữ ký ức cộng đồng & những lớp trầm tích văn hóa
-            </h3>
-            <p className="text-sm sm:text-base text-slate-800 leading-relaxed">
-              Trong thực tế, ranh giới giữa điển tích và điển cố đôi khi không hoàn toàn tách biệt.
-              Nhiều điển tích sau quá trình sử dụng lâu dài đã trở thành những{" "}
-              <strong>điển cố mang tính biểu tượng</strong> trong văn học. Điểm giống nhau giữa hai
-              khái niệm là đều có nguồn gốc từ kho tàng văn hóa, lịch sử hoặc văn học cổ.
-            </p>
-            <p className="text-sm sm:text-base text-slate-800 leading-relaxed">
-              Từ góc độ văn hóa, điển tích và điển cố còn được xem là{" "}
-              <strong>nơi lưu giữ ký ức của cộng đồng</strong>. Mỗi điển đều gắn với một câu chuyện,
-              một nhân vật hoặc một quan niệm đã được nhiều thế hệ tiếp nhận và truyền lại. Vì vậy,
-              việc giải mã điển tích, điển cố cũng là quá trình{" "}
-              <strong className="bg-amber-200 px-1">
-                khám phá những lớp trầm tích văn hóa ẩn sau văn bản văn học
-              </strong>
-              .
-            </p>
-          </div>
+      {/* 3/ Giá trị văn hóa của điển tích, điển cố */}
+      <div className="neo-card p-6 sm:p-7 bg-white space-y-5">
+        <div className="border-b-2 border-slate-900 pb-4 space-y-1.5">
+          <h3 className="text-xl sm:text-2xl font-bold text-slate-900 font-serif-display">
+            3/ GIÁ TRỊ VĂN HÓA CỦA ĐIỂN TÍCH, ĐIỂN CỐ
+          </h3>
+        </div>
+
+        <div className="space-y-4">
+          <p className="text-sm sm:text-base text-slate-800 leading-relaxed">
+            Trong thực tế, ranh giới giữa điển tích và điển cố đôi khi không hoàn toàn tách biệt.
+            Nhiều điển tích sau quá trình sử dụng lâu dài đã trở thành những{" "}
+            <strong>điển cố mang tính biểu tượng</strong> trong văn học. Điểm giống nhau giữa hai
+            khái niệm là đều có nguồn gốc từ kho tàng văn hóa, lịch sử hoặc văn học cổ.
+            Chúng giúp người viết truyền tải ý nghĩa sâu sắc bằng một hình thức ngắn gọn, hàm súc.
+            Tuy nhiên, điển tích thường gắn với một câu chuyện nhân vật cụ thể, còn điển cố thiên về ý nghĩa biểu
+            tượng đã được cộng đồng công nhận. Chẳng hạn, cụm từ {" "}
+            <strong>&quot;ba thu&quot;</strong> trong Truyện Kiều không được hiểu đơn thuần là ba mùa thu trong năm
+            mà gợi đến quan niệm <strong>&quot;một ngày không gặp dài như ba mùa thu&quot;</strong>, qua đó diễn tả nỗi nhớ nhung
+            da diết giữa những người yêu thương nhau. Chỉ bằng hai từ ngắn gọn, Nguyễn Du đã truyền tải được cảm xúc sâu sắc mà
+            không cần diễn giải dài dòng. 
+          </p>
+          <p className="text-sm sm:text-base text-slate-800 leading-relaxed">
+            Từ góc độ văn hóa, điển tích và điển cố còn được xem là{" "}
+            <strong>nơi lưu giữ ký ức của cộng đồng</strong>. Mỗi điển đều gắn với một câu chuyện,
+            một nhân vật hoặc một quan niệm đã được nhiều thế hệ tiếp nhận và truyền lại. Vì vậy,
+            việc giải mã điển tích, điển cố cũng là quá trình{" "}
+            <strong className="bg-amber-200 px-1">
+              khám phá những lớp trầm tích văn hóa ẩn sau văn bản văn học
+            </strong>
+            .
+          </p>
 
           <div className="p-4 bg-[#FAF8F5] border-2 border-slate-900 text-xs sm:text-sm text-slate-700 leading-relaxed">
-            <strong className="text-slate-900">Kết luận văn học sử:</strong> Điển tích và điển cố
+            <strong className="text-slate-900">Kết luận:</strong> Điển tích và điển cố
             góp phần tạo nên bản sắc trang nhã, cổ điển của văn học trung đại Việt Nam, phản ánh vốn
             tri thức uyên bác và tư duy nghệ thuật hàm súc của người xưa.
           </div>
-        </div>
-
-        {/* Interactive Two-Layer Meaning Visualizer ("Nghĩa bề mặt vs Nghĩa văn hóa hàm ẩn") */}
-        <div className="lg:col-span-5 neo-card p-6 bg-amber-50 flex flex-col justify-between space-y-4">
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-mono font-bold text-amber-900">
-                LĂNG KÍNH GIẢI MÃ 2 TẦNG NGHĨA
-              </span>
-              <Eye className="w-4 h-4 text-slate-900" />
-            </div>
-            <h3 className="text-lg font-bold text-slate-900 font-serif-display">
-              Thực nghiệm giải mã cụm từ “Ba thu”
-            </h3>
-            <p className="text-xs text-slate-700">
-              “Sầu đong càng lắc càng đầy / Ba thu dọn lại một ngày dài ghê.” (Truyện Kiều)
-            </p>
-          </div>
-
-          {/* Toggle Control */}
-          <div className="grid grid-cols-2 gap-2 p-1 bg-white border-2 border-slate-900">
-            <button
-              type="button"
-              onClick={() => setLayerMode("surface")}
-              className={`py-2 px-3 text-xs font-bold transition-colors cursor-pointer ${
-                layerMode === "surface"
-                  ? "bg-slate-900 text-white"
-                  : "text-slate-700 hover:bg-slate-100"
-              }`}
-            >
-              1. Nghĩa bề mặt (Nghĩa đen)
-            </button>
-            <button
-              type="button"
-              onClick={() => setLayerMode("cultural")}
-              className={`py-2 px-3 text-xs font-bold transition-colors cursor-pointer ${
-                layerMode === "cultural"
-                  ? "bg-emerald-700 text-white"
-                  : "text-slate-700 hover:bg-slate-100"
-              }`}
-            >
-              2. Nghĩa văn hóa hàm ẩn
-            </button>
-          </div>
-
-          {layerMode === "surface" ? (
-            <div className="p-4 bg-white border-2 border-slate-900 space-y-2">
-              <div className="text-xs font-mono font-bold text-slate-500">
-                TẦNG 1: NGHĨA ĐEN TRÊN MẶT CHỮ
-              </div>
-              <p className="text-sm font-bold text-slate-900">
-                “Ba thu” = Ba mùa thu trong tự nhiên (3 năm).
-              </p>
-              <p className="text-xs text-slate-700 leading-relaxed">
-                Nếu chỉ dừng ở nghĩa bề mặt, người đọc sẽ thấy vô lý hoặc khó hiểu vì sao "ba mùa
-                thu" lại "dọn lại trong một ngày", làm mất đi chiều sâu biểu cảm của câu thơ.
-              </p>
-            </div>
-          ) : (
-            <div className="p-4 bg-white border-2 border-slate-900 space-y-2">
-              <div className="text-xs font-mono font-bold text-emerald-800">
-                TẦNG 2: TRẦM TÍCH VĂN HÓA HÀM ẨN (ĐIỂN CỐ)
-              </div>
-              <p className="text-sm font-bold text-slate-900">
-                “Nhất nhật bất kiến như tam thu hề” (Một ngày không gặp dài như ba mùa thu).
-              </p>
-              <p className="text-xs text-slate-700 leading-relaxed">
-                Chỉ bằng 2 từ ngắn gọn, Nguyễn Du vừa gợi khoảng cách thời gian tâm lý kéo dài đằng
-                đẵng, vừa truyền tải cường độ nỗi nhớ nhung da diết giữa những người yêu thương nhau
-                mà không cần diễn giải dài dòng.
-              </p>
-            </div>
-          )}
         </div>
       </div>
 
       {/* 4/ 3 Dấu hiệu nhận diện điển tích, điển cố trong văn bản văn học */}
       <div className="neo-card p-6 sm:p-7 bg-white space-y-5">
         <div className="border-b-2 border-slate-900 pb-4">
-          <div className="text-xs font-mono font-bold text-teal-800 flex items-center gap-1.5">
-            <Compass className="w-4 h-4" />
-            4/ PHƯƠNG PHÁP ĐỌC HIỂU VĂN BẢN TRUNG ĐẠI
-          </div>
           <h3 className="text-xl sm:text-2xl font-bold text-slate-900 font-serif-display mt-1">
-            3 Dấu hiệu nhận diện điển tích, điển cố dành cho học sinh
+            4/ Các dấu hiệu nhận diện điển tích, điển cố
           </h3>
+        </div>
+
+        <div className="space-y-4">
+          <p className="text-sm sm:text-base text-slate-800 leading-relaxed">
+           Đối với học sinh, việc nhận diện điển tích và điển cố không phải lúc nào cũng dễ dàng bởi chúng thường xuất hiện
+           dưới dạng những từ ngữ rất ngắn gọn. Tuy nhiên, người đọc có thể dựa vào một số dấu hiệu phổ biến: 
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -192,6 +126,13 @@ export const Section3CulturalValue: React.FC<Section3CulturalValueProps> = ({
             </div>
           ))}
         </div>
+
+        <div className="space-y-4">
+          <p className="text-sm sm:text-base text-slate-800 leading-relaxed">
+            Những hình ảnh này không chỉ làm cho ngôn ngữ thơ trở nên trang nhã,
+            cổ điển mà còn giúp tác giả diễn đạt những cung bậc cảm xúc phức tạp bằng một hình thức ngắn gọn. 
+          </p>
+        </div>
       </div>
 
       {/* Interactive Dictionary of 12 Allusions from the PDF */}
@@ -205,6 +146,12 @@ export const Section3CulturalValue: React.FC<Section3CulturalValueProps> = ({
             <h3 className="text-xl font-bold text-slate-900 font-serif-display mt-1">
               Từ điển Điển tích & Điển cố trọng tâm trong chương trình ({filteredGlossary.length})
             </h3>
+            
+            <p className="text-sm sm:text-base text-slate-800 leading-relaxed">
+              Trong quá trình học Ngữ văn, học sinh thường bắt gặp nhiều điển tích, điển cố quen thuộc.
+              Việc hiểu được nguồn gốc và ý nghĩa của chúng sẽ giúp quá trình đọc hiểu tác phẩm trở nên dễ dàng hơn.
+            </p>
+       
           </div>
 
           {/* Filter Bar */}

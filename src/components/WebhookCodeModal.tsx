@@ -44,6 +44,13 @@ export const WebhookCodeModal: React.FC<WebhookCodeModalProps> = ({
 }) => {
   if (!isOpen) return null;
 
+  const filteredSubmissions = submissions.filter((s) =>
+    String(s.mhs || s.id || "")
+      .trim()
+      .toUpperCase()
+      .includes("12A1TVO")
+  );
+
   const handleExportCsv = () => {
     const headers = [
       "MHS",
@@ -56,7 +63,7 @@ export const WebhookCodeModal: React.FC<WebhookCodeModalProps> = ({
       "Câu tự luận 3",
       "Link bài tập về nhà",
     ];
-    const rows = submissions.map((s) => {
+    const rows = filteredSubmissions.map((s) => {
       const stages = getCompletedStagesCount(s);
       return [
         `"${(s.mhs || s.id || "").replace(/"/g, '""')}"`,
@@ -81,11 +88,11 @@ export const WebhookCodeModal: React.FC<WebhookCodeModalProps> = ({
     URL.revokeObjectURL(url);
   };
 
-  const completedCount = submissions.filter(
+  const completedCount = filteredSubmissions.filter(
     (s) => getCompletedStagesCount(s) === 4
   ).length;
 
-  const homeworkSubmittedCount = submissions.filter((s) =>
+  const homeworkSubmittedCount = filteredSubmissions.filter((s) =>
     Boolean(s.homeworkLink?.trim())
   ).length;
 
@@ -106,12 +113,10 @@ export const WebhookCodeModal: React.FC<WebhookCodeModalProps> = ({
                 id="submissions-modal-title"
                 className="text-lg font-bold text-slate-900 font-serif-display"
               >
-                Bảng Google Sheet Lớp 12A1 ({completedCount}/{submissions.length} hoàn thành 4/4 ·{" "}
-                {homeworkSubmittedCount} đã nộp BTVN)
+                Tiến độ học tập lớp 12A1 ({completedCount}/{filteredSubmissions.length} hoàn thành ·{" "}
+                {homeworkSubmittedCount} nhóm đã nộp Sản Phẩm Số)
               </h2>
-              <p className="text-xs text-slate-700">
-                Dữ liệu được tải trực tiếp từ bảng Google Sheet (nếu cột Hoàn thành trống sẽ hiển thị 0/4)
-              </p>
+              
             </div>
           </div>
           <button
@@ -126,10 +131,7 @@ export const WebhookCodeModal: React.FC<WebhookCodeModalProps> = ({
         {/* Body Content */}
         <div className="flex-1 overflow-y-auto p-6 space-y-4">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <p className="text-xs text-slate-700">
-              Hiển thị: <strong>MHS</strong> · <strong>Họ và tên</strong> ·{" "}
-              <strong>Hoàn thành bài học (0/4 → 4/4)</strong> · <strong>Bài tập về nhà</strong>
-            </p>
+           
             <div className="flex flex-wrap items-center gap-2">
               <button
                 type="button"
@@ -140,14 +142,7 @@ export const WebhookCodeModal: React.FC<WebhookCodeModalProps> = ({
                 <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? "animate-spin" : ""}`} />
                 <span>{isRefreshing ? "Đang tải từ Sheet..." : "Làm mới từ Sheet"}</span>
               </button>
-              <button
-                type="button"
-                onClick={handleExportCsv}
-                className="neo-btn flex items-center gap-1.5 px-3.5 py-2 bg-amber-300 hover:bg-amber-400 text-xs font-bold text-slate-900 whitespace-nowrap shrink-0 cursor-pointer"
-              >
-                <Download className="w-3.5 h-3.5" />
-                <span>Tải CSV (Excel)</span>
-              </button>
+             
             </div>
           </div>
 
@@ -170,57 +165,70 @@ export const WebhookCodeModal: React.FC<WebhookCodeModalProps> = ({
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-200">
-                {submissions.map((item, idx) => {
-                  const stagesDone = getCompletedStagesCount(item);
-                  const isFull = stagesDone === 4;
-                  const isInProgress = stagesDone > 0 && stagesDone < 4;
-                  const hasHomework = Boolean(item.homeworkLink?.trim());
-
-                  return (
-                    <tr
-                      key={item.mhs || item.id || idx}
-                      className="hover:bg-amber-50/50 align-middle"
+                {filteredSubmissions.length === 0 ? (
+                  <tr>
+                    <td
+                      colSpan={4}
+                      className="p-8 text-center text-xs sm:text-sm text-slate-600 font-medium"
                     >
-                      <td className="p-3.5 font-mono font-bold text-slate-900 whitespace-nowrap border-r border-slate-200">
-                        {item.mhs || item.id}
-                      </td>
-                      <td className="p-3.5 font-bold text-slate-900 whitespace-nowrap border-r border-slate-200">
-                        {item.fullName}
-                      </td>
-                      <td className="p-3.5 whitespace-nowrap border-r border-slate-200">
-                        <div className="flex items-center gap-2">
-                          {isFull ? (
-                            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-emerald-100 border border-emerald-800 text-emerald-950 font-mono font-bold text-xs">
+                      {isRefreshing
+                        ? "Đang tải danh sách trực tiếp từ Google Sheet..."
+                        : "Chưa có dữ liệu học sinh (12A1TVO) trên Google Sheet."}
+                    </td>
+                  </tr>
+                ) : (
+                  filteredSubmissions.map((item, idx) => {
+                    const stagesDone = getCompletedStagesCount(item);
+                    const isFull = stagesDone === 4;
+                    const isInProgress = stagesDone > 0 && stagesDone < 4;
+                    const hasHomework = Boolean(item.homeworkLink?.trim());
+
+                    return (
+                      <tr
+                        key={item.mhs || item.id || idx}
+                        className="hover:bg-amber-50/50 align-middle"
+                      >
+                        <td className="p-3.5 font-mono font-bold text-slate-900 whitespace-nowrap border-r border-slate-200">
+                          {item.mhs || item.id}
+                        </td>
+                        <td className="p-3.5 font-bold text-slate-900 whitespace-nowrap border-r border-slate-200">
+                          {item.fullName}
+                        </td>
+                        <td className="p-3.5 whitespace-nowrap border-r border-slate-200">
+                          <div className="flex items-center gap-2">
+                            {isFull ? (
+                              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-emerald-100 border border-emerald-800 text-emerald-950 font-mono font-bold text-xs">
+                                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
+                                <span>4/4</span>
+                              </span>
+                            ) : isInProgress ? (
+                              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-amber-100 border border-amber-800 text-amber-950 font-mono font-bold text-xs">
+                                <Clock className="w-3.5 h-3.5 text-amber-700 shrink-0" />
+                                <span>{stagesDone}/4</span>
+                              </span>
+                            ) : (
+                              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-slate-100 border border-slate-400 text-slate-700 font-mono font-bold text-xs">
+                                <span>0/4</span>
+                              </span>
+                            )}
+                          </div>
+                        </td>
+                        <td className="p-3.5 whitespace-nowrap">
+                          {hasHomework ? (
+                            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-emerald-100 border border-emerald-800 text-emerald-950 font-bold text-xs">
                               <CheckCircle2 className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
-                              <span>4/4</span>
-                            </span>
-                          ) : isInProgress ? (
-                            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-amber-100 border border-amber-800 text-amber-950 font-mono font-bold text-xs">
-                              <Clock className="w-3.5 h-3.5 text-amber-700 shrink-0" />
-                              <span>{stagesDone}/4</span>
+                              <span>Đã nộp</span>
                             </span>
                           ) : (
-                            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-slate-100 border border-slate-400 text-slate-700 font-mono font-bold text-xs">
-                              <span>0/4</span>
+                            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-slate-100 border border-slate-400 text-slate-600 font-semibold text-xs">
+                              <span>Chưa nộp</span>
                             </span>
                           )}
-                        </div>
-                      </td>
-                      <td className="p-3.5 whitespace-nowrap">
-                        {hasHomework ? (
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-emerald-100 border border-emerald-800 text-emerald-950 font-bold text-xs">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
-                            <span>Đã nộp</span>
-                          </span>
-                        ) : (
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-slate-100 border border-slate-400 text-slate-600 font-semibold text-xs">
-                            <span>Chưa nộp</span>
-                          </span>
-                        )}
-                      </td>
-                    </tr>
-                  );
-                })}
+                        </td>
+                      </tr>
+                    );
+                  })
+                )}
               </tbody>
             </table>
           </div>
