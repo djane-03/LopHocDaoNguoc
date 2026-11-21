@@ -19,15 +19,15 @@ export const Section3CulturalValue: React.FC<Section3CulturalValueProps> = ({
   });
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-5 sm:space-y-8">
       {/* Section Header */}
-      <div className="neo-card p-6 sm:p-8 bg-white">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div className="space-y-2 max-w-2xl">
-            <div className="text-xs font-mono font-bold text-teal-800">
+      <div className="neo-card p-4 sm:p-8 bg-white">
+        <div className="flex flex-row items-start md:items-center justify-between gap-4 sm:gap-6">
+          <div className="space-y-2 max-w-2xl min-w-0">
+            <div className="text-[11px] sm:text-xs font-mono font-bold text-teal-800">
               PHẦN 03 · GIAI ĐOẠN 3: RA LÁ 🍀
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 font-serif-display">
+            <h2 className="text-xl sm:text-3xl font-bold text-slate-900 font-serif-display leading-snug">
               3/ Giá trị văn hóa & Nhận diện Điển tích, Điển cố
             </h2>
             <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
@@ -35,16 +35,16 @@ export const Section3CulturalValue: React.FC<Section3CulturalValueProps> = ({
               nhận diện điển cố trong văn bản và tra cứu cẩm nang các điển tích, điển cố trọng tâm.
             </p>
           </div>
-          <div className="w-20 h-20 shrink-0 flex items-center justify-center bg-teal-100 border-2 border-slate-900 shadow-[3px_3px_0px_0px_#0f172a]">
-            <LeafyDoodle className="w-16 h-16 text-slate-900" />
+          <div className="w-14 h-14 sm:w-20 sm:h-20 shrink-0 flex items-center justify-center bg-teal-100 border-2 border-slate-900 shadow-[3px_3px_0px_0px_#0f172a]">
+            <LeafyDoodle className="w-11 h-11 sm:w-16 sm:h-16 text-slate-900" />
           </div>
         </div>
       </div>
 
       {/* 3/ Giá trị văn hóa của điển tích, điển cố */}
-      <div className="neo-card p-6 sm:p-7 bg-white space-y-5">
-        <div className="border-b-2 border-slate-900 pb-4 space-y-1.5">
-          <h3 className="text-xl sm:text-2xl font-bold text-slate-900 font-serif-display">
+      <div className="neo-card p-4 sm:p-7 bg-white space-y-4 sm:space-y-5">
+        <div className="border-b-2 border-slate-900 pb-3 sm:pb-4 space-y-1.5">
+          <h3 className="text-lg sm:text-2xl font-bold text-slate-900 font-serif-display">
             3/ GIÁ TRỊ VĂN HÓA CỦA ĐIỂN TÍCH, ĐIỂN CỐ
           </h3>
         </div>
@@ -83,9 +83,9 @@ export const Section3CulturalValue: React.FC<Section3CulturalValueProps> = ({
       </div>
 
       {/* 4/ 3 Dấu hiệu nhận diện điển tích, điển cố trong văn bản văn học */}
-      <div className="neo-card p-6 sm:p-7 bg-white space-y-5">
-        <div className="border-b-2 border-slate-900 pb-4">
-          <h3 className="text-xl sm:text-2xl font-bold text-slate-900 font-serif-display mt-1">
+      <div className="neo-card p-4 sm:p-7 bg-white space-y-4 sm:space-y-5">
+        <div className="border-b-2 border-slate-900 pb-3 sm:pb-4">
+          <h3 className="text-lg sm:text-2xl font-bold text-slate-900 font-serif-display mt-1">
             4/ Các dấu hiệu nhận diện điển tích, điển cố
           </h3>
         </div>
@@ -97,11 +97,11 @@ export const Section3CulturalValue: React.FC<Section3CulturalValueProps> = ({
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
           {RECOGNITION_SIGNS.map((sign) => (
             <div
               key={sign.step}
-              className="p-5 bg-[#FAF8F5] border-2 border-slate-900 flex flex-col justify-between space-y-4"
+              className="p-4 sm:p-5 bg-[#FAF8F5] border-2 border-slate-900 flex flex-col justify-between space-y-3.5 sm:space-y-4"
             >
               <div className="space-y-2.5">
                 <div className="text-xs font-mono font-bold text-slate-900 underline decoration-amber-400 decoration-2">
@@ -136,18 +136,18 @@ export const Section3CulturalValue: React.FC<Section3CulturalValueProps> = ({
       </div>
 
       {/* Interactive Dictionary of 12 Allusions from the PDF */}
-      <div className="neo-card p-6 sm:p-7 bg-white space-y-5">
+      <div className="neo-card p-4 sm:p-7 bg-white space-y-4 sm:space-y-5">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b-2 border-slate-900 pb-4">
           <div>
-            <div className="text-xs font-mono font-bold text-slate-600 flex items-center gap-1.5">
-              <BookMarked className="w-4 h-4 text-slate-900" />
-              CẨM NANG GIẢI MÃ TƯ LIỆU NGỮ VĂN
+            <div className="text-[11px] sm:text-xs font-mono font-bold text-slate-600 flex items-center gap-1.5">
+              <BookMarked className="w-4 h-4 text-slate-900 shrink-0" />
+              <span>CẨM NANG GIẢI MÃ TƯ LIỆU NGỮ VĂN</span>
             </div>
-            <h3 className="text-xl font-bold text-slate-900 font-serif-display mt-1">
+            <h3 className="text-lg sm:text-xl font-bold text-slate-900 font-serif-display mt-1 leading-snug">
               Từ điển Điển tích & Điển cố trọng tâm trong chương trình ({filteredGlossary.length})
             </h3>
             
-            <p className="text-sm sm:text-base text-slate-800 leading-relaxed">
+            <p className="text-sm sm:text-base text-slate-800 leading-relaxed mt-1.5">
               Trong quá trình học Ngữ văn, học sinh thường bắt gặp nhiều điển tích, điển cố quen thuộc.
               Việc hiểu được nguồn gốc và ý nghĩa của chúng sẽ giúp quá trình đọc hiểu tác phẩm trở nên dễ dàng hơn.
             </p>
@@ -155,14 +155,14 @@ export const Section3CulturalValue: React.FC<Section3CulturalValueProps> = ({
           </div>
 
           {/* Filter Bar */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-            <div className="flex items-center border-2 border-slate-900 bg-[#FAF8F5]">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full lg:w-auto shrink-0">
+            <div className="grid grid-cols-3 sm:flex items-center border-2 border-slate-900 bg-[#FAF8F5] w-full sm:w-auto">
               {(["ALL", "Điển tích", "Điển cố"] as const).map((cat) => (
                 <button
                   key={cat}
                   type="button"
                   onClick={() => setFilterCategory(cat)}
-                  className={`px-3 py-2 text-xs font-bold transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
+                  className={`min-h-[42px] px-2.5 sm:px-3 py-2 text-xs font-bold transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
                     filterCategory === cat
                       ? "bg-slate-900 text-white"
                       : "text-slate-700 hover:bg-slate-200"
@@ -176,16 +176,16 @@ export const Section3CulturalValue: React.FC<Section3CulturalValueProps> = ({
         </div>
 
         {/* Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-4">
           {filteredGlossary.map((item) => (
             <div
               key={item.id}
-              className="p-4 bg-[#FAF8F5] border-2 border-slate-900 flex flex-col justify-between space-y-3"
+              className="p-3.5 sm:p-4 bg-[#FAF8F5] border-2 border-slate-900 flex flex-col justify-between space-y-3"
             >
               <div className="space-y-2">
-                <div className="flex items-center justify-between text-xs text-slate-600 border-b border-slate-300 pb-1.5">
-                  <span className="font-mono font-bold text-slate-900">{item.category}</span>
-                  <span className="truncate max-w-[180px]" title={item.sourceWork}>
+                <div className="flex items-center justify-between gap-2 text-xs text-slate-600 border-b border-slate-300 pb-1.5">
+                  <span className="font-mono font-bold text-slate-900 shrink-0">{item.category}</span>
+                  <span className="truncate min-w-0 text-right" title={item.sourceWork}>
                     {item.sourceWork}
                   </span>
                 </div>
@@ -210,11 +210,11 @@ export const Section3CulturalValue: React.FC<Section3CulturalValueProps> = ({
       </div>
 
       {/* Navigation Footer */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-5 neo-card bg-teal-100">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3.5 sm:gap-4 p-4 sm:p-5 neo-card bg-teal-100">
         <button
           type="button"
           onClick={onPrev}
-          className="neo-btn w-full sm:w-auto px-5 py-2.5 bg-white text-slate-900 hover:bg-slate-100 font-bold text-sm flex items-center justify-center gap-2 cursor-pointer"
+          className="neo-btn w-full sm:w-auto min-h-[46px] px-5 py-2.5 bg-white text-slate-900 hover:bg-slate-100 font-bold text-sm flex items-center justify-center gap-2 cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Quay lại Phần 2</span>
@@ -228,7 +228,7 @@ export const Section3CulturalValue: React.FC<Section3CulturalValueProps> = ({
         <button
           type="button"
           onClick={onNext}
-          className="neo-btn w-full sm:w-auto px-6 py-3 bg-slate-900 text-white hover:bg-slate-800 font-bold text-sm flex items-center justify-center gap-2 whitespace-nowrap shrink-0 cursor-pointer"
+          className="neo-btn w-full sm:w-auto min-h-[46px] px-6 py-3 bg-slate-900 text-white hover:bg-slate-800 font-bold text-sm flex items-center justify-center gap-2 whitespace-nowrap shrink-0 cursor-pointer"
         >
           <span>Next · Phần 4 (Đơm hoa 🌻)</span>
           <ArrowRight className="w-4 h-4" />

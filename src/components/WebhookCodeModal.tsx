@@ -98,30 +98,29 @@ export const WebhookCodeModal: React.FC<WebhookCodeModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-4 bg-slate-900/60 backdrop-blur-sm"
       role="dialog"
       aria-modal="true"
       aria-labelledby="submissions-modal-title"
     >
-      <div className="neo-card w-full max-w-4xl max-h-[88vh] flex flex-col bg-[#FAF8F5] overflow-hidden">
+      <div className="neo-card w-full max-w-4xl max-h-[92vh] sm:max-h-[88vh] flex flex-col bg-[#FAF8F5] overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 bg-amber-100 border-b-2 border-slate-900">
-          <div className="flex items-center gap-3">
-            <Users className="w-6 h-6 text-slate-900 shrink-0" />
-            <div>
+        <div className="flex items-start sm:items-center justify-between gap-3 px-4 sm:px-6 py-3.5 sm:py-4 bg-amber-100 border-b-2 border-slate-900">
+          <div className="flex items-start sm:items-center gap-2.5 sm:gap-3 min-w-0">
+            <Users className="w-5 h-5 sm:w-6 sm:h-6 text-slate-900 shrink-0 mt-0.5 sm:mt-0" />
+            <div className="min-w-0">
               <h2
                 id="submissions-modal-title"
-                className="text-lg font-bold text-slate-900 font-serif-display"
+                className="text-base sm:text-lg font-bold text-slate-900 font-serif-display leading-snug"
               >
                 Tiến độ học tập lớp 12A1 ({completedCount}/{filteredSubmissions.length} hoàn thành ·{" "}
                 {homeworkSubmittedCount} nhóm đã nộp Sản Phẩm Số)
               </h2>
-              
             </div>
           </div>
           <button
             onClick={onClose}
-            className="neo-btn p-2 bg-white hover:bg-slate-100 text-slate-900 cursor-pointer"
+            className="neo-btn p-2 min-h-[40px] min-w-[40px] flex items-center justify-center bg-white hover:bg-slate-100 text-slate-900 shrink-0 cursor-pointer"
             aria-label="Đóng cửa sổ"
           >
             <X className="w-5 h-5" />
@@ -129,24 +128,98 @@ export const WebhookCodeModal: React.FC<WebhookCodeModalProps> = ({
         </div>
 
         {/* Body Content */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-4">
+        <div className="flex-1 overflow-y-auto p-3.5 sm:p-6 space-y-3.5 sm:space-y-4">
           <div className="flex flex-wrap items-center justify-between gap-3">
-           
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
               <button
                 type="button"
                 onClick={onRefresh}
                 disabled={isRefreshing}
-                className="neo-btn flex items-center gap-1.5 px-3.5 py-2 bg-white hover:bg-slate-100 text-xs font-bold text-slate-900 whitespace-nowrap shrink-0 cursor-pointer"
+                className="neo-btn w-full sm:w-auto min-h-[42px] flex items-center justify-center gap-1.5 px-3.5 py-2 bg-white hover:bg-slate-100 text-xs font-bold text-slate-900 whitespace-nowrap shrink-0 cursor-pointer"
               >
                 <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? "animate-spin" : ""}`} />
                 <span>{isRefreshing ? "Đang tải từ Sheet..." : "Làm mới từ Sheet"}</span>
               </button>
-             
             </div>
           </div>
 
-          <div className="overflow-x-auto border-2 border-slate-900 bg-white">
+          {/* Mobile Card List (< 640px): zero horizontal scroll */}
+          <div className="sm:hidden space-y-2.5">
+            {filteredSubmissions.length === 0 ? (
+              <div className="p-6 bg-white border-2 border-slate-900 text-center text-xs text-slate-600 font-medium">
+                {isRefreshing
+                  ? "Đang tải danh sách trực tiếp từ Google Sheet..."
+                  : "Chưa có dữ liệu học sinh (12A1TVO) trên Google Sheet."}
+              </div>
+            ) : (
+              filteredSubmissions.map((item, idx) => {
+                const stagesDone = getCompletedStagesCount(item);
+                const isFull = stagesDone === 4;
+                const isInProgress = stagesDone > 0 && stagesDone < 4;
+                const hasHomework = Boolean(item.homeworkLink?.trim());
+
+                return (
+                  <div
+                    key={item.mhs || item.id || idx}
+                    className="p-3.5 bg-white border-2 border-slate-900 space-y-2.5"
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="min-w-0">
+                        <div className="text-[11px] font-mono font-bold text-slate-500">
+                          {item.mhs || item.id}
+                        </div>
+                        <div className="text-sm font-bold text-slate-900 break-words">
+                          {item.fullName}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2 pt-2 border-t border-slate-200 text-xs">
+                      <div className="space-y-1">
+                        <div className="text-[10px] font-mono text-slate-500">
+                          Hoàn thành bài học
+                        </div>
+                        {isFull ? (
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-emerald-100 border border-emerald-800 text-emerald-950 font-mono font-bold text-xs">
+                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
+                            <span>4/4</span>
+                          </span>
+                        ) : isInProgress ? (
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-amber-100 border border-amber-800 text-amber-950 font-mono font-bold text-xs">
+                            <Clock className="w-3.5 h-3.5 text-amber-700 shrink-0" />
+                            <span>{stagesDone}/4</span>
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-slate-100 border border-slate-400 text-slate-700 font-mono font-bold text-xs">
+                            <span>0/4</span>
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="space-y-1">
+                        <div className="text-[10px] font-mono text-slate-500">
+                          Bài tập về nhà
+                        </div>
+                        {hasHomework ? (
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-emerald-100 border border-emerald-800 text-emerald-950 font-bold text-xs">
+                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
+                            <span>Đã nộp</span>
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-slate-100 border border-slate-400 text-slate-600 font-semibold text-xs">
+                            <span>Chưa nộp</span>
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })
+            )}
+          </div>
+
+          {/* Tablet / Desktop Table (>= 640px) */}
+          <div className="hidden sm:block overflow-x-auto border-2 border-slate-900 bg-white">
             <table className="w-full text-left border-collapse text-xs sm:text-sm">
               <thead>
                 <tr className="bg-slate-900 text-white">

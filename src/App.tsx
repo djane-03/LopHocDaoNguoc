@@ -625,12 +625,12 @@ export default function App() {
   return (
     <div className="min-h-screen flex flex-col bg-[#FAF8F5] text-slate-900">
       {/* Top Bar Contract: 3 Zones (Brand Wordmark — 4 Nav Links — 1 Primary Action) */}
-      <header className="sticky top-0 z-30 flex items-center justify-between gap-8 px-6 py-4 bg-[#FAF8F5]/95 backdrop-blur-sm border-b-2 border-slate-900">
+      <header className="sticky top-0 z-30 flex items-center justify-between gap-2 sm:gap-6 md:gap-8 px-3 sm:px-6 py-3 sm:py-4 bg-[#FAF8F5]/95 backdrop-blur-sm border-b-2 border-slate-900">
         {/* Zone 1: Single text element wordmark */}
         <button
           type="button"
           onClick={() => setViewMode("home")}
-          className="text-lg font-bold tracking-tight text-slate-900 font-serif-display whitespace-nowrap shrink-0 cursor-pointer"
+          className="text-base sm:text-lg font-bold tracking-tight text-slate-900 font-serif-display whitespace-nowrap shrink-0 cursor-pointer"
         >
           Điển Cố Văn Học
         </button>
@@ -679,17 +679,17 @@ export default function App() {
         </nav>
 
         {/* Zone 3: Student Account & Logout Action */}
-        <div className="flex items-center gap-2 shrink-0">
+        <div className="flex items-center gap-1.5 sm:gap-2 min-w-0 shrink">
           <button
             type="button"
             onClick={() => handleOpenMhsModal("lesson")}
-            className="neo-btn px-4 py-2 text-xs font-bold bg-amber-300 hover:bg-amber-400 text-slate-900 whitespace-nowrap shrink-0 cursor-pointer flex items-center gap-2"
+            className="neo-btn px-2.5 sm:px-4 py-2 min-h-[40px] sm:min-h-0 max-w-[165px] sm:max-w-[260px] md:max-w-none text-xs font-bold bg-amber-300 hover:bg-amber-400 text-slate-900 cursor-pointer flex items-center gap-1.5 sm:gap-2 min-w-0"
           >
-            <KeyRound className="w-3.5 h-3.5" />
-            <span>
+            <KeyRound className="w-3.5 h-3.5 shrink-0" />
+            <span className="truncate">
               {studentMhs
                 ? `${studentMhs} · ${studentName}`
-                : "Nhập mã học sinh (12A1)"}
+                : "Nhập mã học sinh"}
             </span>
           </button>
 
@@ -698,9 +698,10 @@ export default function App() {
               type="button"
               onClick={handleLogout}
               title="Đăng xuất tài khoản hiện tại"
-              className="neo-btn px-3 py-2 text-xs font-bold bg-white hover:bg-rose-50 text-rose-700 whitespace-nowrap shrink-0 cursor-pointer flex items-center gap-1.5"
+              aria-label="Đăng xuất tài khoản hiện tại"
+              className="neo-btn px-2.5 sm:px-3 py-2 min-h-[40px] min-w-[40px] sm:min-h-0 sm:min-w-0 justify-center text-xs font-bold bg-white hover:bg-rose-50 text-rose-700 whitespace-nowrap shrink-0 cursor-pointer flex items-center gap-1.5"
             >
-              <LogOut className="w-3.5 h-3.5" />
+              <LogOut className="w-3.5 h-3.5 shrink-0" />
               <span className="hidden sm:inline">Đăng xuất</span>
             </button>
           )}
@@ -708,16 +709,16 @@ export default function App() {
       </header>
 
       {/* Main Content Container */}
-      <main className="flex-1 w-full max-w-[1200px] mx-auto px-4 sm:px-6 py-8 sm:py-12">
+      <main className="flex-1 w-full max-w-[1200px] mx-auto px-3.5 sm:px-6 py-5 sm:py-10 lg:py-12">
         {viewMode === "home" ? (
           /* ================= MÀN HÌNH CHÍNH (MAIN LANDING SCREEN) ================= */
-          <div className="space-y-12">
+          <div className="space-y-6 sm:space-y-12">
             {/* Hero Centerpiece Card */}
-            <section className="neo-card p-6 sm:p-10 lg:p-12 bg-white">
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+            <section className="neo-card p-4 sm:p-10 lg:p-12 bg-white">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 items-center">
                 {/* Left Column: Title, Flipped Classroom Introduction & Prominent Start Button */}
-                <div className="lg:col-span-7 space-y-6 text-left">
-                  <div className="flex flex-wrap items-center gap-2 text-xs font-mono font-bold text-slate-600">
+                <div className="lg:col-span-7 space-y-4 sm:space-y-6 text-left">
+                  <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] sm:text-xs font-mono font-bold text-slate-600">
                     <span>MÔ HÌNH LỚP HỌC ĐẢO NGƯỢC</span>
                     <span aria-hidden="true">·</span>
                     <span>Ngữ Văn 12</span>
@@ -726,13 +727,13 @@ export default function App() {
                   </div>
 
                   <h1
-                    className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 font-serif-display leading-[1.15]"
+                    className="text-2xl sm:text-4xl lg:text-5xl font-bold text-slate-900 font-serif-display leading-[1.18] sm:leading-[1.15]"
                     style={{ textWrap: "balance" }}
                   >
                     Nghệ thuật sử dụng điển cố trong tác phẩm văn học
                   </h1>
 
-                  <p className="text-base sm:text-lg text-slate-700 leading-relaxed max-w-2xl">
+                  <p className="text-sm sm:text-base lg:text-lg text-slate-700 leading-relaxed max-w-2xl">
                     Khám phá thế giới <strong>điển tích, điển cố</strong> từ{" "}
                     <em>Bình Ngô đại cáo</em>, <em>Truyện Kiều</em> đến{" "}
                     <em>Chuyện người con gái Nam Xương</em> qua hành trình nuôi dưỡng{" "}
@@ -741,22 +742,22 @@ export default function App() {
                   </p>
 
                   {/* Primary CTA ("Start" / "Bắt đầu") */}
-                  <div className="flex flex-wrap items-center gap-4 pt-2">
+                  <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3 sm:gap-4 pt-1 sm:pt-2">
                     <button
                       type="button"
                       onClick={() => handleOpenMhsModal("lesson")}
-                      className="neo-btn px-8 py-4 bg-amber-300 hover:bg-amber-400 text-slate-900 font-bold text-base sm:text-lg flex items-center gap-3 cursor-pointer"
+                      className="neo-btn w-full sm:w-auto min-h-[48px] px-6 sm:px-8 py-3.5 sm:py-4 bg-amber-300 hover:bg-amber-400 text-slate-900 font-bold text-base sm:text-lg flex items-center justify-center gap-3 cursor-pointer"
                     >
-                      <Play className="w-5 h-5 fill-slate-900" />
+                      <Play className="w-5 h-5 fill-slate-900 shrink-0" />
                       <span>Bắt đầu bài học</span>
                     </button>
 
                     <button
                       type="button"
                       onClick={handleOpenSubmissionsModal}
-                      className="neo-btn px-5 py-4 bg-white hover:bg-slate-100 text-slate-900 font-bold text-sm flex items-center gap-2 cursor-pointer"
+                      className="neo-btn w-full sm:w-auto min-h-[48px] px-5 py-3.5 sm:py-4 bg-white hover:bg-slate-100 text-slate-900 font-bold text-sm flex items-center justify-center gap-2 cursor-pointer"
                     >
-                      <TableProperties className="w-4 h-4" />
+                      <TableProperties className="w-4 h-4 shrink-0" />
                       <span>Tiến độ học tập</span>
                     </button>
                   </div>
@@ -764,9 +765,9 @@ export default function App() {
 
                 {/* Right Column: Minimalist Single-Line Literary Doodle */}
                 <div className="lg:col-span-5">
-                  <div className="p-5 bg-[#FAF8F5] border-2 border-slate-900 shadow-[4px_4px_0px_0px_#0f172a]">
+                  <div className="p-3.5 sm:p-5 bg-[#FAF8F5] border-2 border-slate-900 shadow-[3px_3px_0px_0px_#0f172a] sm:shadow-[4px_4px_0px_0px_#0f172a]">
                     <LiteraryHeroDoodle className="w-full h-auto text-slate-900" />
-                    <div className="mt-3 pt-3 border-t border-slate-300 flex items-center justify-between text-xs text-slate-600 font-mono">
+                    <div className="mt-2.5 sm:mt-3 pt-2.5 sm:pt-3 border-t border-slate-300 flex items-center justify-between text-xs text-slate-600 font-mono">
                       <span></span>
                       <span></span>
                     </div>
@@ -776,11 +777,11 @@ export default function App() {
             </section>
 
             {/* Section Nộp Link Bài Tập Về Nhà (Thay thế Lộ trình bài học tuần tự) */}
-            <section className="neo-card p-6 sm:p-8 lg:p-10 bg-white space-y-6">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b-2 border-slate-900 pb-5">
+            <section className="neo-card p-4 sm:p-8 lg:p-10 bg-white space-y-5 sm:space-y-6">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b-2 border-slate-900 pb-4 sm:pb-5">
                 <div>
                   <p className="text-xs font-mono font-bold text-slate-600"></p>
-                  <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 font-serif-display mt-1">
+                  <h2 className="text-xl sm:text-3xl font-bold text-slate-900 font-serif-display mt-1">
                     Nơi nộp Link Bài Tập Về Nhà
                   </h2>
                   <p className="text-xs sm:text-sm text-slate-600 mt-1">
@@ -791,16 +792,16 @@ export default function App() {
 
               {/* Trạng thái xác thực Mã học sinh (MHS) */}
               {!studentMhs ? (
-                <div className="p-5 bg-amber-50 border-2 border-slate-900 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="p-4 sm:p-5 bg-amber-50 border-2 border-slate-900 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                   <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 bg-amber-300 border-2 border-slate-900 flex items-center justify-center shrink-0">
-                      <Lock className="w-5 h-5 text-slate-900" />
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 bg-amber-300 border-2 border-slate-900 flex items-center justify-center shrink-0">
+                      <Lock className="w-4 h-4 sm:w-5 sm:h-5 text-slate-900" />
                     </div>
                     <div>
-                      <h3 className="text-sm font-bold text-slate-900">
+                      <h3 className="text-sm font-bold text-slate-900 leading-snug">
                         Yêu cầu nhập Mã tham gia trước khi gửi link bài tập về nhà
                       </h3>
-                      <p className="text-xs text-slate-700 mt-0.5 leading-relaxed">
+                      <p className="text-xs text-slate-700 mt-1 leading-relaxed">
                         Bạn cần xác thực Mã đã được cấp trong danh sách trên Google Sheet để hệ
                         thống mở khóa gửi link bài tập về nhà vào đúng vị trí hàng của bạn.
                       </p>
@@ -810,17 +811,17 @@ export default function App() {
                   <button
                     type="button"
                     onClick={() => handleOpenMhsModal("homework")}
-                    className="neo-btn px-5 py-2.5 bg-amber-300 hover:bg-amber-400 text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-2 whitespace-nowrap shrink-0 cursor-pointer"
+                    className="neo-btn w-full sm:w-auto min-h-[44px] px-5 py-2.5 bg-amber-300 hover:bg-amber-400 text-xs sm:text-sm font-bold text-slate-900 flex items-center justify-center gap-2 whitespace-nowrap shrink-0 cursor-pointer"
                   >
                     <KeyRound className="w-4 h-4" />
                     <span>Nhập Mã học sinh ngay</span>
                   </button>
                 </div>
               ) : (
-                <div className="p-4 bg-emerald-50 border-2 border-emerald-800 flex flex-wrap items-center justify-between gap-3">
-                  <div className="flex items-center gap-2.5 text-xs sm:text-sm text-emerald-950">
-                    <CheckCircle2 className="w-5 h-5 text-emerald-700 shrink-0" />
-                    <div>
+                <div className="p-3.5 sm:p-4 bg-emerald-50 border-2 border-emerald-800 flex flex-col sm:flex-row sm:flex-wrap sm:items-center justify-between gap-3">
+                  <div className="flex items-start sm:items-center gap-2.5 text-xs sm:text-sm text-emerald-950 min-w-0">
+                    <CheckCircle2 className="w-5 h-5 text-emerald-700 shrink-0 mt-0.5 sm:mt-0" />
+                    <div className="break-words">
                       <span className="text-slate-600">Học sinh nộp bài: </span>
                       <span className="font-mono font-bold">{studentMhs}</span>
                       <span className="mx-1.5">·</span>
@@ -829,11 +830,11 @@ export default function App() {
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-3">
+                  <div className="flex flex-wrap items-center gap-3 pl-7 sm:pl-0">
                     <button
                       type="button"
                       onClick={() => handleOpenMhsModal("homework")}
-                      className="text-xs font-bold text-slate-800 underline underline-offset-2 hover:text-amber-700 cursor-pointer"
+                      className="text-xs font-bold text-slate-800 underline underline-offset-2 hover:text-amber-700 cursor-pointer py-1"
                     >
                       Đổi Mã học sinh khác
                     </button>
@@ -841,7 +842,7 @@ export default function App() {
                     <button
                       type="button"
                       onClick={handleLogout}
-                      className="text-xs font-bold text-rose-700 underline underline-offset-2 hover:text-rose-900 cursor-pointer inline-flex items-center gap-1"
+                      className="text-xs font-bold text-rose-700 underline underline-offset-2 hover:text-rose-900 cursor-pointer inline-flex items-center gap-1 py-1"
                     >
                       <LogOut className="w-3.5 h-3.5" />
                       <span>Đăng xuất</span>
@@ -873,16 +874,16 @@ export default function App() {
                         placeholder={
                           studentMhs
                             ? "https://drive.google.com/... hoặc https://docs.google.com/..."
-                            : "Vui lòng nhập Mã học sinh (MHS) trước khi dán link bài tập về nhà..."
+                            : "Vui lòng nhập Mã học sinh (MHS) trước khi dán link..."
                         }
-                        className="w-full pl-10 pr-4 py-3 text-sm bg-[#FAF8F5] border-2 border-slate-900 focus:outline-none focus:bg-white"
+                        className="w-full min-h-[46px] pl-10 pr-4 py-3 text-base sm:text-sm bg-[#FAF8F5] border-2 border-slate-900 focus:outline-none focus:bg-white"
                       />
                     </div>
 
                     <button
                       type="submit"
                       disabled={isSubmittingHomework}
-                      className="neo-btn px-6 py-3 bg-amber-300 hover:bg-amber-400 text-slate-900 font-bold text-sm flex items-center justify-center gap-2 whitespace-nowrap shrink-0 cursor-pointer"
+                      className="neo-btn w-full sm:w-auto min-h-[46px] px-6 py-3 bg-amber-300 hover:bg-amber-400 text-slate-900 font-bold text-sm flex items-center justify-center gap-2 whitespace-nowrap shrink-0 cursor-pointer"
                     >
                       <Send className="w-4 h-4" />
                       <span>
@@ -897,22 +898,22 @@ export default function App() {
                 </div>
 
                 {homeworkError && (
-                  <div className="p-3 bg-rose-50 border-2 border-rose-800 text-xs font-bold text-rose-800 flex items-center gap-2">
-                    <AlertCircle className="w-4 h-4 shrink-0" />
+                  <div className="p-3 bg-rose-50 border-2 border-rose-800 text-xs font-bold text-rose-800 flex items-start gap-2">
+                    <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
                     <span>{homeworkError}</span>
                   </div>
                 )}
 
                 {homeworkSuccess && (
-                  <div className="p-4 bg-emerald-50 border-2 border-slate-900 space-y-1.5 text-xs sm:text-sm">
-                    <div className="font-bold text-emerald-900 flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
+                  <div className="p-3.5 sm:p-4 bg-emerald-50 border-2 border-slate-900 space-y-1.5 text-xs sm:text-sm">
+                    <div className="font-bold text-emerald-900 flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0 mt-0.5" />
                       <span>
                         Đã lưu Link bài tập về nhà vào đúng vị trí MHS {homeworkSuccess.mhs} (
                         {homeworkSuccess.fullName}) trên Google Sheet!
                       </span>
                     </div>
-                    <p className="text-xs text-slate-600 font-mono">
+                    <p className="text-xs text-slate-600 font-mono break-all">
                       Thời gian nộp lần cuối: {homeworkSuccess.submittedAt} · Link:{" "}
                       <a
                         href={homeworkSuccess.link}
@@ -981,13 +982,13 @@ export default function App() {
       </main>
 
       {/* Quiet Footer */}
-      <footer className="mt-auto border-t-2 border-slate-900 bg-white py-5 px-6">
-        <div className="max-w-[1200px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-600">
-          <div className="flex flex-wrap items-center gap-2">
+      <footer className="mt-auto border-t-2 border-slate-900 bg-white py-4 sm:py-5 px-4 sm:px-6">
+        <div className="max-w-[1200px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-2.5 sm:gap-4 text-xs text-slate-600 text-center sm:text-left">
+          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-2 gap-y-1">
             <span className="font-bold text-slate-900">
               Nghệ thuật sử dụng điển cố trong tác phẩm văn học
             </span>
-            <span aria-hidden="true">·</span>
+            <span aria-hidden="true" className="hidden sm:inline">·</span>
             <span>Lớp 12A1 · Mô hình Lớp học đảo ngược</span>
           </div>
           <div className="flex flex-wrap items-center gap-4">
@@ -995,7 +996,7 @@ export default function App() {
               href="./assets/aistudio/T__LI_U__I_N_T_CH__I_N_C___1__817db971.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-slate-900 underline underline-offset-2"
+              className="hover:text-slate-900 underline underline-offset-2 py-1"
             >
               Tư liệu Điển tích Điển cố (PDF)
             </a>
@@ -1011,7 +1012,7 @@ export default function App() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.16 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-sm"
             role="dialog"
             aria-modal="true"
             aria-labelledby="student-modal-title"
@@ -1021,35 +1022,35 @@ export default function App() {
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.95, opacity: 0, y: 8 }}
               transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
-              className="neo-card w-full max-w-md p-6 sm:p-8 bg-[#FAF8F5] relative"
+              className="neo-card w-full max-w-md max-h-[92vh] overflow-y-auto p-5 sm:p-8 bg-[#FAF8F5] relative"
             >
               <button
                 type="button"
                 onClick={() => setIsStudentModalOpen(false)}
-                className="neo-btn absolute top-4 right-4 p-1.5 bg-white hover:bg-slate-100 text-slate-900 cursor-pointer"
+                className="neo-btn absolute top-3.5 right-3.5 sm:top-4 sm:right-4 p-2 min-h-[38px] min-w-[38px] flex items-center justify-center bg-white hover:bg-slate-100 text-slate-900 cursor-pointer"
                 aria-label="Đóng"
               >
                 <X className="w-4 h-4" />
               </button>
 
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-11 h-11 flex items-center justify-center bg-amber-300 border-2 border-slate-900">
-                  <UserCheck className="w-6 h-6 text-slate-900" />
+              <div className="flex items-center gap-3 mb-4 pr-10">
+                <div className="w-10 h-10 sm:w-11 sm:h-11 shrink-0 flex items-center justify-center bg-amber-300 border-2 border-slate-900">
+                  <UserCheck className="w-5 h-5 sm:w-6 sm:h-6 text-slate-900" />
                 </div>
-                <div>
-                  <p className="text-xs font-mono font-bold text-slate-600">
+                <div className="min-w-0">
+                  <p className="text-[11px] sm:text-xs font-mono font-bold text-slate-600">
                     XÁC THỰC TRUY CẬP LỚP 12A1
                   </p>
                   <h2
                     id="student-modal-title"
-                    className="text-xl font-bold text-slate-900 font-serif-display"
+                    className="text-lg sm:text-xl font-bold text-slate-900 font-serif-display"
                   >
                     Nhập Mã Tham Gia
                   </h2>
                 </div>
               </div>
 
-              <p className="text-xs sm:text-sm text-slate-700 leading-relaxed mb-5">
+              <p className="text-xs sm:text-sm text-slate-700 leading-relaxed mb-4 sm:mb-5">
                 {mhsModalTarget === "homework" ? (
                   <>
                     Nhập <strong>Mã truy cập</strong> có trong danh sách trên Google Sheet để mở
@@ -1081,7 +1082,7 @@ export default function App() {
                       if (formError) setFormError("");
                     }}
                     placeholder="Nhập mã truy cập của bạn..."
-                    className="w-full px-3.5 py-2.5 text-sm font-mono font-bold uppercase bg-white border-2 border-slate-900 focus:outline-none focus:bg-amber-50"
+                    className="w-full min-h-[46px] px-3.5 py-2.5 text-base sm:text-sm font-mono font-bold uppercase bg-white border-2 border-slate-900 focus:outline-none focus:bg-amber-50"
                     autoFocus
                   />
                 </div>
@@ -1090,7 +1091,7 @@ export default function App() {
                 {previewMatchedStudent && (
                   <div className="p-3 bg-emerald-50 border-2 border-emerald-800 flex items-center gap-2.5 text-xs text-emerald-950">
                     <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
-                    <div>
+                    <div className="min-w-0 break-words">
                       <span className="font-mono font-bold">
                         {previewMatchedStudent.mhs || previewMatchedStudent.id}
                       </span>
@@ -1106,20 +1107,20 @@ export default function App() {
                   </p>
                 )}
 
-                <div className="pt-2 flex items-center gap-3">
+                <div className="pt-2 flex flex-col-reverse sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3">
                   <button
                     type="button"
                     onClick={() => setIsStudentModalOpen(false)}
-                    className="neo-btn flex-1 py-2.5 px-4 bg-white hover:bg-slate-100 text-xs font-bold text-slate-900 cursor-pointer"
+                    className="neo-btn sm:flex-1 min-h-[44px] py-2.5 px-4 bg-white hover:bg-slate-100 text-xs font-bold text-slate-900 cursor-pointer"
                   >
                     Hủy
                   </button>
                   <button
                     type="submit"
                     disabled={isVerifyingMhs}
-                    className="neo-btn flex-[2] py-2.5 px-5 bg-amber-300 hover:bg-amber-400 disabled:opacity-60 text-sm font-bold text-slate-900 flex items-center justify-center gap-2 cursor-pointer"
+                    className="neo-btn sm:flex-[2] min-h-[44px] py-2.5 px-5 bg-amber-300 hover:bg-amber-400 disabled:opacity-60 text-sm font-bold text-slate-900 flex items-center justify-center gap-2 cursor-pointer"
                   >
-                    <BookOpen className="w-4 h-4" />
+                    <BookOpen className="w-4 h-4 shrink-0" />
                     <span>
                       {isVerifyingMhs
                         ? "Đang kiểm tra trên Sheet..."
@@ -1137,7 +1138,7 @@ export default function App() {
                       setIsStudentModalOpen(false);
                       handleOpenSubmissionsModal();
                     }}
-                    className="font-bold text-slate-900 underline underline-offset-2 hover:text-amber-700 cursor-pointer"
+                    className="font-bold text-slate-900 underline underline-offset-2 hover:text-amber-700 cursor-pointer py-1"
                   >
                     Tra cứu DSHS 12A1 trên Sheet
                   </button>
@@ -1145,7 +1146,7 @@ export default function App() {
                     <button
                       type="button"
                       onClick={handleLogout}
-                      className="font-bold text-rose-700 underline underline-offset-2 hover:text-rose-900 cursor-pointer inline-flex items-center gap-1"
+                      className="font-bold text-rose-700 underline underline-offset-2 hover:text-rose-900 cursor-pointer inline-flex items-center gap-1 py-1"
                     >
                       <LogOut className="w-3.5 h-3.5" />
                       <span>Đăng xuất ({studentMhs})</span>
@@ -1165,38 +1166,38 @@ export default function App() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-sm"
           >
             <motion.div
               initial={{ scale: 0.9, y: 20, opacity: 0 }}
               animate={{ scale: 1, y: 0, opacity: 1 }}
               exit={{ scale: 0.9, y: 20, opacity: 0 }}
               transition={{ type: "spring", stiffness: 280, damping: 24 }}
-              className="neo-card w-full max-w-md bg-[#FAF8F5] overflow-hidden"
+              className="neo-card w-full max-w-md max-h-[92vh] overflow-y-auto bg-[#FAF8F5]"
             >
-              <div className="flex items-center justify-between px-6 py-4 bg-emerald-200 border-b-2 border-slate-900">
-                <div className="flex items-center gap-2.5">
-                  <CheckCircle2 className="w-5 h-5 text-slate-900" />
-                  <h3 className="text-base font-bold text-slate-900 font-serif-display">
+              <div className="flex items-center justify-between gap-2 px-4 sm:px-6 py-3.5 sm:py-4 bg-emerald-200 border-b-2 border-slate-900">
+                <div className="flex items-center gap-2 min-w-0">
+                  <CheckCircle2 className="w-5 h-5 text-slate-900 shrink-0" />
+                  <h3 className="text-sm sm:text-base font-bold text-slate-900 font-serif-display truncate">
                     Nộp Bài Tập Về Nhà Thành Công
                   </h3>
                 </div>
                 <button
                   type="button"
                   onClick={() => setHomeworkSuccess(null)}
-                  className="neo-btn p-1.5 bg-white hover:bg-slate-100 text-slate-900 cursor-pointer"
+                  className="neo-btn p-1.5 min-h-[36px] min-w-[36px] flex items-center justify-center bg-white hover:bg-slate-100 text-slate-900 shrink-0 cursor-pointer"
                   aria-label="Đóng"
                 >
                   <X className="w-4 h-4" />
                 </button>
               </div>
 
-              <div className="p-6 text-center space-y-4">
-                <div className="w-16 h-16 mx-auto bg-emerald-100 border-2 border-slate-900 flex items-center justify-center shadow-[3px_3px_0px_#1E293B]">
-                  <CheckCircle2 className="w-9 h-9 text-emerald-700" />
+              <div className="p-4 sm:p-6 text-center space-y-4">
+                <div className="w-14 h-14 sm:w-16 sm:h-16 mx-auto bg-emerald-100 border-2 border-slate-900 flex items-center justify-center shadow-[3px_3px_0px_#1E293B]">
+                  <CheckCircle2 className="w-8 h-8 sm:w-9 sm:h-9 text-emerald-700" />
                 </div>
 
-                <p className="text-lg font-bold text-slate-900 font-serif-display leading-snug">
+                <p className="text-base sm:text-lg font-bold text-slate-900 font-serif-display leading-snug">
                   Chúc mừng bạn{" "}
                   <span className="text-emerald-800 underline decoration-amber-400 decoration-2 underline-offset-4">
                     {homeworkSuccess.fullName}
@@ -1205,19 +1206,19 @@ export default function App() {
                 </p>
 
                 <div className="p-3 bg-white border-2 border-slate-900 text-left text-xs space-y-1.5">
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between gap-2">
                     <span className="text-slate-500 font-mono">MÃ HỌC SINH:</span>
                     <span className="font-mono font-bold text-slate-900">
                       {homeworkSuccess.mhs}
                     </span>
                   </div>
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between gap-2">
                     <span className="text-slate-500 font-mono">THỜI GIAN NỘP:</span>
-                    <span className="font-mono font-semibold text-slate-800">
+                    <span className="font-mono font-semibold text-slate-800 text-right">
                       {homeworkSuccess.submittedAt}
                     </span>
                   </div>
-                  <div className="pt-1 border-t border-slate-200 truncate">
+                  <div className="pt-1 border-t border-slate-200 break-all">
                     <span className="text-slate-500 font-mono">LINK BÀI NỘP: </span>
                     <a
                       href={homeworkSuccess.link}
@@ -1233,7 +1234,7 @@ export default function App() {
                 <button
                   type="button"
                   onClick={() => setHomeworkSuccess(null)}
-                  className="neo-btn w-full py-2.5 px-6 bg-amber-300 hover:bg-amber-400 text-slate-900 font-bold text-sm cursor-pointer"
+                  className="neo-btn w-full min-h-[46px] py-2.5 px-6 bg-amber-300 hover:bg-amber-400 text-slate-900 font-bold text-sm cursor-pointer"
                 >
                   Đóng
                 </button>

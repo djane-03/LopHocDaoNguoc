@@ -46,15 +46,15 @@ export const Section1Concept: React.FC<Section1ConceptProps> = ({ onNext }) => {
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, "Điển tích" | "Điển cố">>({});
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-5 sm:space-y-8">
       {/* Section Banner */}
-      <div className="neo-card p-6 sm:p-8 bg-white">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div className="space-y-2 max-w-2xl">
-            <div className="text-xs font-mono font-bold text-emerald-800">
+      <div className="neo-card p-4 sm:p-8 bg-white">
+        <div className="flex flex-row items-start md:items-center justify-between gap-4 sm:gap-6">
+          <div className="space-y-2 max-w-2xl min-w-0">
+            <div className="text-[11px] sm:text-xs font-mono font-bold text-emerald-800">
               PHẦN 01 · GIAI ĐOẠN 1: GIEO HẠT 🌱
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 font-serif-display">
+            <h2 className="text-xl sm:text-3xl font-bold text-slate-900 font-serif-display leading-snug">
               1/ Khái niệm Điển tích và Điển cố
             </h2>
             <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
@@ -62,22 +62,22 @@ export const Section1Concept: React.FC<Section1ConceptProps> = ({ onNext }) => {
               <em>Truyện Kiều</em> và bảng tiêu chí phân biệt Điển tích – Điển cố.
             </p>
           </div>
-          <div className="w-20 h-20 shrink-0 flex items-center justify-center bg-amber-100 border-2 border-slate-900 shadow-[3px_3px_0px_0px_#0f172a]">
-            <SeedDoodle className="w-16 h-16 text-slate-900" />
+          <div className="w-14 h-14 sm:w-20 sm:h-20 shrink-0 flex items-center justify-center bg-amber-100 border-2 border-slate-900 shadow-[3px_3px_0px_0px_#0f172a]">
+            <SeedDoodle className="w-11 h-11 sm:w-16 sm:h-16 text-slate-900" />
           </div>
         </div>
       </div>
 
       {/* Two-Column Concept Cards: a. Điển tích & b. Điển cố */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 items-stretch">
         {/* Card A: Điển tích */}
-        <article className="neo-card p-6 sm:p-7 bg-white flex flex-col justify-between">
+        <article className="neo-card p-4 sm:p-7 bg-white flex flex-col justify-between">
           <div className="space-y-4">
-            <div className="flex items-center justify-between border-b-2 border-slate-900 pb-3">
-              <h3 className="text-xl font-bold text-slate-900 font-serif-display">
+            <div className="flex flex-wrap items-center justify-between gap-1.5 border-b-2 border-slate-900 pb-3">
+              <h3 className="text-lg sm:text-xl font-bold text-slate-900 font-serif-display">
                 a. Điển tích
               </h3>
-              <span className="text-xs font-mono font-bold text-slate-600">
+              <span className="text-[11px] sm:text-xs font-mono font-bold text-slate-600">
                 Tích truyện xưa · Câu chuyện kể
               </span>
             </div>
@@ -91,8 +91,8 @@ export const Section1Concept: React.FC<Section1ConceptProps> = ({ onNext }) => {
               </p>
             </div>
 
-            <div className="p-4 bg-[#FAF8F5] border-2 border-slate-900 space-y-3">
-              <div className="flex items-center justify-between text-xs text-slate-600">
+            <div className="p-3.5 sm:p-4 bg-[#FAF8F5] border-2 border-slate-900 space-y-3">
+              <div className="flex flex-wrap items-center justify-between gap-1 text-xs text-slate-600">
                 <span className="font-bold text-slate-900">VÍ DỤ ĐIỂN HÌNH</span>
                 <span>Bình Ngô đại cáo — Nguyễn Trãi</span>
               </div>
@@ -122,13 +122,13 @@ export const Section1Concept: React.FC<Section1ConceptProps> = ({ onNext }) => {
         </article>
 
         {/* Card B: Điển cố */}
-        <article className="neo-card p-6 sm:p-7 bg-white flex flex-col justify-between">
+        <article className="neo-card p-4 sm:p-7 bg-white flex flex-col justify-between">
           <div className="space-y-4">
-            <div className="flex items-center justify-between border-b-2 border-slate-900 pb-3">
-              <h3 className="text-xl font-bold text-slate-900 font-serif-display">
+            <div className="flex flex-wrap items-center justify-between gap-1.5 border-b-2 border-slate-900 pb-3">
+              <h3 className="text-lg sm:text-xl font-bold text-slate-900 font-serif-display">
                 b. Điển cố
               </h3>
-              <span className="text-xs font-mono font-bold text-slate-600">
+              <span className="text-[11px] sm:text-xs font-mono font-bold text-slate-600">
                 Từ ngữ · Hình ảnh biểu tượng
               </span>
             </div>
@@ -143,8 +143,8 @@ export const Section1Concept: React.FC<Section1ConceptProps> = ({ onNext }) => {
               </p>
             </div>
 
-            <div className="p-4 bg-[#FAF8F5] border-2 border-slate-900 space-y-3">
-              <div className="flex items-center justify-between text-xs text-slate-600">
+            <div className="p-3.5 sm:p-4 bg-[#FAF8F5] border-2 border-slate-900 space-y-3">
+              <div className="flex flex-wrap items-center justify-between gap-1 text-xs text-slate-600">
                 <span className="font-bold text-slate-900">VÍ DỤ ĐIỂN HÌNH</span>
                 <span>Truyện Kiều — Nguyễn Du</span>
               </div>
@@ -175,7 +175,7 @@ export const Section1Concept: React.FC<Section1ConceptProps> = ({ onNext }) => {
       </div>
 
       {/* Cultural Reference Standard Note */}
-      <div className="neo-card p-6 bg-amber-50">
+      <div className="neo-card p-4 sm:p-6 bg-amber-50">
         <h3 className="text-base font-bold text-slate-900">
           Chuẩn mực tham chiếu trong văn hóa truyền thống
         </h3>
@@ -193,7 +193,7 @@ export const Section1Concept: React.FC<Section1ConceptProps> = ({ onNext }) => {
 
       {/* Comparison Table: Điển tích vs Điển cố */}
       <div className="neo-card overflow-hidden bg-white">
-        <div className="p-5 sm:p-6 bg-slate-900 text-white">
+        <div className="p-4 sm:p-6 bg-slate-900 text-white">
           <h3 className="text-lg sm:text-xl font-bold font-serif-display">
             Bảng đối chiếu phân biệt Điển tích và Điển cố
           </h3>
@@ -202,7 +202,41 @@ export const Section1Concept: React.FC<Section1ConceptProps> = ({ onNext }) => {
           </p>
         </div>
 
-        <div className="overflow-x-auto">
+        {/* Mobile Stacked Comparison Cards (< 768px) */}
+        <div className="md:hidden divide-y-2 divide-slate-900">
+          {COMPARISON_TABLE.map((row) => (
+            <div key={row.criterion} className="p-4 space-y-3">
+              <div className="text-xs font-mono font-bold uppercase text-slate-900 bg-amber-100 border-2 border-slate-900 px-3 py-1.5 inline-block">
+                Tiêu chí: {row.criterion}
+              </div>
+
+              <div className="space-y-3">
+                <div className="p-3.5 bg-[#FAF8F5] border-2 border-slate-900 space-y-2">
+                  <div className="text-xs font-mono font-bold text-emerald-800">ĐIỂN TÍCH</div>
+                  <p className="text-sm text-slate-800 leading-relaxed">{row.dienTich}</p>
+                  {row.examplePair.dienTichEx && (
+                    <p className="text-xs text-slate-600 font-mono pt-2 border-t border-slate-200">
+                      VD: {row.examplePair.dienTichEx}
+                    </p>
+                  )}
+                </div>
+
+                <div className="p-3.5 bg-[#FAF8F5] border-2 border-slate-900 space-y-2">
+                  <div className="text-xs font-mono font-bold text-amber-800">ĐIỂN CỐ</div>
+                  <p className="text-sm text-slate-800 leading-relaxed">{row.dienCo}</p>
+                  {row.examplePair.dienCoEx && (
+                    <p className="text-xs text-slate-600 font-mono pt-2 border-t border-slate-200">
+                      VD: {row.examplePair.dienCoEx}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Desktop / Tablet 3-Column Table (>= 768px) */}
+        <div className="hidden md:block overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-[#FAF8F5] border-b-2 border-slate-900 text-xs font-mono font-bold text-slate-800">
@@ -241,7 +275,7 @@ export const Section1Concept: React.FC<Section1ConceptProps> = ({ onNext }) => {
       </div>
 
       {/* Interactive Micro-Activity: Quick Distinguish Check */}
-      <div className="neo-card p-6 bg-white space-y-4">
+      <div className="neo-card p-4 sm:p-6 bg-white space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 pb-4">
           <div>
             <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
@@ -280,7 +314,7 @@ export const Section1Concept: React.FC<Section1ConceptProps> = ({ onNext }) => {
                         onClick={() =>
                           setSelectedAnswers((prev) => ({ ...prev, [item.id]: option }))
                         }
-                        className={`py-2 px-3 text-xs font-bold border-2 border-slate-900 transition-colors cursor-pointer ${
+                        className={`min-h-[44px] py-2 px-3 text-xs font-bold border-2 border-slate-900 transition-colors cursor-pointer ${
                           chosen === option
                             ? option === item.correctType
                               ? "bg-emerald-600 text-white"
@@ -316,15 +350,15 @@ export const Section1Concept: React.FC<Section1ConceptProps> = ({ onNext }) => {
       </div>
 
       {/* Bottom Next Action Bar */}
-      <div className="flex items-center justify-between p-5 neo-card bg-amber-100">
-        <div className="text-xs sm:text-sm text-slate-800">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 p-4 sm:p-5 neo-card bg-amber-100">
+        <div className="text-xs sm:text-sm text-slate-800 text-center sm:text-left">
           <span className="font-bold text-slate-900">Hoàn tất Phần 1 (Gieo hạt 🌱)!</span> Tiếp
           tục khám phá <strong>Phần 2: Đặc tính của điển cố</strong> để giúp hạt mầm nảy chồi.
         </div>
         <button
           type="button"
           onClick={onNext}
-          className="neo-btn px-6 py-3 bg-slate-900 text-white hover:bg-slate-800 font-bold text-sm flex items-center gap-2 whitespace-nowrap shrink-0 cursor-pointer"
+          className="neo-btn w-full sm:w-auto min-h-[46px] px-6 py-3 bg-slate-900 text-white hover:bg-slate-800 font-bold text-sm flex items-center justify-center gap-2 whitespace-nowrap shrink-0 cursor-pointer"
         >
           <span>Next · Phần 2 (Nảy mầm 🌿)</span>
           <ArrowRight className="w-4 h-4" />

@@ -178,15 +178,15 @@ export const Section4Exercises: React.FC<Section4ExercisesProps> = ({
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-5 sm:space-y-8">
       {/* Section Header */}
-      <div className="neo-card p-6 sm:p-8 bg-white">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div className="space-y-2 max-w-2xl">
-            <div className="text-xs font-mono font-bold text-amber-800">
+      <div className="neo-card p-4 sm:p-8 bg-white">
+        <div className="flex flex-row items-start md:items-center justify-between gap-4 sm:gap-6">
+          <div className="space-y-2 max-w-2xl min-w-0">
+            <div className="text-[11px] sm:text-xs font-mono font-bold text-amber-800">
               PHẦN 04 · GIAI ĐOẠN 4: ĐƠM HOA 🌻
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 font-serif-display">
+            <h2 className="text-xl sm:text-3xl font-bold text-slate-900 font-serif-display leading-snug">
               4/ Bài tập vận dụng
             </h2>
             <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
@@ -195,29 +195,29 @@ export const Section4Exercises: React.FC<Section4ExercisesProps> = ({
               kết quả.
             </p>
           </div>
-          <div className="w-20 h-20 shrink-0 flex items-center justify-center bg-amber-200 border-2 border-slate-900 shadow-[3px_3px_0px_0px_#0f172a]">
-            <FlowerDoodle className="w-16 h-16 text-slate-900" />
+          <div className="w-14 h-14 sm:w-20 sm:h-20 shrink-0 flex items-center justify-center bg-amber-200 border-2 border-slate-900 shadow-[3px_3px_0px_0px_#0f172a]">
+            <FlowerDoodle className="w-11 h-11 sm:w-16 sm:h-16 text-slate-900" />
           </div>
         </div>
       </div>
 
       {/* Part A: Bài tập 1 - 4 (Quick Quiz with Instant Explanation) */}
-      <div className="neo-card p-6 sm:p-7 bg-white space-y-6">
+      <div className="neo-card p-4 sm:p-7 bg-white space-y-5 sm:space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b-2 border-slate-900 pb-4">
           <div>
-            <div className="text-xs font-mono font-bold text-slate-600">
+            <div className="text-[11px] sm:text-xs font-mono font-bold text-slate-600">
               CHẶNG A · BÀI TẬP NHẬN DIỆN NHANH (BÀI TẬP 1 – 4 TRONG TƯ LIỆU)
             </div>
-            <h3 className="text-xl font-bold text-slate-900 font-serif-display mt-1">
+            <h3 className="text-lg sm:text-xl font-bold text-slate-900 font-serif-display mt-1">
               Xác định và giải nghĩa nhanh điển tích, điển cố
             </h3>
           </div>
-          <div className="text-xs font-mono font-bold text-slate-900 bg-amber-100 px-3 py-1.5 border-2 border-slate-900 tabular-nums">
+          <div className="self-start sm:self-auto text-xs font-mono font-bold text-slate-900 bg-amber-100 px-3 py-1.5 border-2 border-slate-900 tabular-nums shrink-0">
             Đã làm: {answeredCount}/{QUICK_QUIZ_QUESTIONS.length} câu
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
           {QUICK_QUIZ_QUESTIONS.map((q) => {
             const chosenIdx = quizAnswers[q.id];
             const isAnswered = chosenIdx !== undefined;
@@ -225,7 +225,7 @@ export const Section4Exercises: React.FC<Section4ExercisesProps> = ({
             return (
               <div
                 key={q.id}
-                className="p-5 bg-[#FAF8F5] border-2 border-slate-900 flex flex-col justify-between space-y-4"
+                className="p-4 sm:p-5 bg-[#FAF8F5] border-2 border-slate-900 flex flex-col justify-between space-y-4"
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between text-xs font-mono font-bold text-slate-600">
@@ -260,12 +260,12 @@ export const Section4Exercises: React.FC<Section4ExercisesProps> = ({
                         key={idx}
                         type="button"
                         onClick={() => handleSelectQuizOption(q.id, idx)}
-                        className={`w-full text-left p-3 text-xs sm:text-sm border-2 transition-colors cursor-pointer flex items-start gap-2.5 ${btnStyle}`}
+                        className={`w-full min-h-[44px] text-left p-3 text-xs sm:text-sm border-2 transition-colors cursor-pointer flex items-start gap-2.5 ${btnStyle}`}
                       >
                         <span className="font-mono font-bold shrink-0">
                           {String.fromCharCode(65 + idx)}.
                         </span>
-                        <span>{opt}</span>
+                        <span className="leading-snug">{opt}</span>
                       </button>
                     );
                   })}
@@ -280,37 +280,37 @@ export const Section4Exercises: React.FC<Section4ExercisesProps> = ({
       <form
         onSubmit={handleSubmitAssignment}
         autoComplete="off"
-        className="space-y-8"
+        className="space-y-5 sm:space-y-8"
       >
-        <div className="neo-card p-6 sm:p-7 bg-white space-y-6">
+        <div className="neo-card p-4 sm:p-7 bg-white space-y-5 sm:space-y-6">
           <div className="border-b-2 border-slate-900 pb-4">
-            <div className="text-xs font-mono font-bold text-emerald-800">
+            <div className="text-[11px] sm:text-xs font-mono font-bold text-emerald-800">
               CHẶNG B · BÀI TẬP PHÂN TÍCH & VIẾT ĐOẠN VĂN VẬN DỤNG
             </div>
-            <h3 className="text-xl font-bold text-slate-900 font-serif-display mt-1">
+            <h3 className="text-lg sm:text-xl font-bold text-slate-900 font-serif-display mt-1 leading-snug">
               Thực hành giải mã văn bản và sáng tạo đoạn văn có sử dụng điển tích, điển cố
             </h3>
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {ESSAY_PROMPTS.map((item) => (
               <div
                 key={item.id}
-                className="p-5 bg-[#FAF8F5] border-2 border-slate-900 space-y-4"
+                className="p-4 sm:p-5 bg-[#FAF8F5] border-2 border-slate-900 space-y-3.5 sm:space-y-4"
               >
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                   <div>
                     <span className="text-xs font-mono font-bold text-slate-600">
                       {item.label}
                     </span>
-                    <h4 className="text-base sm:text-lg font-bold text-slate-900 font-serif-display mt-0.5">
+                    <h4 className="text-base sm:text-lg font-bold text-slate-900 font-serif-display mt-0.5 leading-snug">
                       {item.title}
                     </h4>
                   </div>
                 </div>
 
                 {item.excerpt && (
-                  <blockquote className="p-4 bg-white border-2 border-slate-900 text-sm font-serif-display italic text-slate-900 leading-relaxed">
+                  <blockquote className="p-3.5 sm:p-4 bg-white border-2 border-slate-900 text-sm font-serif-display italic text-slate-900 leading-relaxed">
                     {item.excerpt}
                     {item.excerptSource && (
                       <footer className="mt-2 text-xs font-sans not-italic font-bold text-slate-600">
@@ -320,7 +320,7 @@ export const Section4Exercises: React.FC<Section4ExercisesProps> = ({
                   </blockquote>
                 )}
 
-                <p className="text-sm font-bold text-slate-900">{item.question}</p>
+                <p className="text-sm font-bold text-slate-900 leading-snug">{item.question}</p>
 
                 <textarea
                   name={item.id}
@@ -329,7 +329,7 @@ export const Section4Exercises: React.FC<Section4ExercisesProps> = ({
                   value={essayAnswers[item.id] ?? ""}
                   onChange={(e) => handleEssayChange(item.id, e.target.value)}
                   placeholder={item.placeholder}
-                  className="w-full p-3.5 text-sm bg-white border-2 border-slate-900 focus:outline-none focus:bg-amber-50/40 leading-relaxed"
+                  className="w-full p-3.5 text-base sm:text-sm bg-white border-2 border-slate-900 focus:outline-none focus:bg-amber-50/40 leading-relaxed"
                 />
               </div>
             ))}
@@ -337,21 +337,21 @@ export const Section4Exercises: React.FC<Section4ExercisesProps> = ({
         </div>
 
         {/* Submission & Google Sheets Integration Panel */}
-        <div className="neo-card p-6 sm:p-8 bg-amber-100 space-y-6">
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b-2 border-slate-900 pb-5">
+        <div className="neo-card p-4 sm:p-8 bg-amber-100 space-y-5 sm:space-y-6">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b-2 border-slate-900 pb-4 sm:pb-5">
             <div className="space-y-1">
-              <div className="text-xs font-mono font-bold text-slate-700 flex items-center gap-1.5">
-                <FileSpreadsheet className="w-4 h-4 text-slate-900" />
-                HOÀN TẤT BÀI HỌC & LƯU VÀO GOOGLE SHEETS
+              <div className="text-[11px] sm:text-xs font-mono font-bold text-slate-700 flex items-center gap-1.5">
+                <FileSpreadsheet className="w-4 h-4 text-slate-900 shrink-0" />
+                <span>HOÀN TẤT BÀI HỌC & LƯU VÀO GOOGLE SHEETS</span>
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-slate-900 font-serif-display">
+              <h3 className="text-lg sm:text-2xl font-bold text-slate-900 font-serif-display">
                 Xác nhận hồ sơ học tập & Gửi bài tập
               </h3>
             </div>
           </div>
 
           {/* Data Package Preview Summary */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             <div className="p-3.5 bg-white border-2 border-slate-900">
               <div className="text-[11px] font-mono text-slate-500">MÃ HỌC SINH (MHS)</div>
               <div className="text-sm font-mono font-bold text-slate-900 mt-1">
@@ -373,11 +373,11 @@ export const Section4Exercises: React.FC<Section4ExercisesProps> = ({
           )}
 
           {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
+          <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4 pt-1 sm:pt-2">
             <button
               type="button"
               onClick={onPrev}
-              className="neo-btn w-full sm:w-auto px-5 py-3 bg-white text-slate-900 hover:bg-slate-100 font-bold text-sm flex items-center justify-center gap-2 cursor-pointer"
+              className="neo-btn w-full sm:w-auto min-h-[46px] px-5 py-3 bg-white text-slate-900 hover:bg-slate-100 font-bold text-sm flex items-center justify-center gap-2 cursor-pointer"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Quay lại Phần 3</span>
@@ -386,13 +386,13 @@ export const Section4Exercises: React.FC<Section4ExercisesProps> = ({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="neo-btn w-full sm:w-auto px-8 py-3.5 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-60 text-white font-bold text-base flex items-center justify-center gap-2.5 cursor-pointer"
+              className="neo-btn w-full sm:w-auto min-h-[48px] px-6 sm:px-8 py-3.5 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-60 text-white font-bold text-sm sm:text-base flex items-center justify-center gap-2.5 cursor-pointer"
             >
               {isSubmitting ? (
                 <span>Đang gửi dữ liệu...</span>
               ) : (
                 <>
-                  <Send className="w-5 h-5" />
+                  <Send className="w-5 h-5 shrink-0" />
                   <span>Gửi bài tập (Hoàn thành 🌻)</span>
                 </>
               )}
@@ -404,31 +404,31 @@ export const Section4Exercises: React.FC<Section4ExercisesProps> = ({
       {/* Completion Popup Modal */}
       {isCompletionPopupOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-sm"
           role="dialog"
           aria-modal="true"
           aria-labelledby="completion-popup-title"
         >
-          <div className="neo-card w-full max-w-lg p-6 sm:p-8 bg-[#FAF8F5] text-center relative">
+          <div className="neo-card w-full max-w-lg max-h-[92vh] overflow-y-auto p-5 sm:p-8 bg-[#FAF8F5] text-center relative">
             <button
               type="button"
               onClick={() => {
                 setIsCompletionPopupOpen(false);
                 onGoHome();
               }}
-              className="neo-btn absolute top-4 right-4 p-1.5 bg-white hover:bg-slate-100 text-slate-900 cursor-pointer"
+              className="neo-btn absolute top-3.5 right-3.5 sm:top-4 sm:right-4 p-2 min-h-[38px] min-w-[38px] flex items-center justify-center bg-white hover:bg-slate-100 text-slate-900 cursor-pointer"
               aria-label="Đóng"
             >
               <X className="w-4 h-4" />
             </button>
 
-            <div className="mx-auto mb-4 w-20 h-20 flex items-center justify-center bg-emerald-100 border-2 border-slate-900 shadow-[4px_4px_0px_0px_#0f172a]">
-              <CheckCircle2 className="w-10 h-10 text-emerald-700" />
+            <div className="mx-auto mb-4 w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center bg-emerald-100 border-2 border-slate-900 shadow-[3px_3px_0px_0px_#0f172a] sm:shadow-[4px_4px_0px_0px_#0f172a]">
+              <CheckCircle2 className="w-8 h-8 sm:w-10 sm:h-10 text-emerald-700" />
             </div>
 
             <h3
               id="completion-popup-title"
-              className="text-xl sm:text-2xl font-bold text-slate-900 font-serif-display leading-snug"
+              className="text-lg sm:text-2xl font-bold text-slate-900 font-serif-display leading-snug"
             >
               Bạn đã hoàn thành bài tập vận dụng. Hãy download bài tập về nhà và làm nộp trước ngày 24/11/2026
             </h3>
@@ -438,15 +438,14 @@ export const Section4Exercises: React.FC<Section4ExercisesProps> = ({
               <strong>{studentClass || "12A1"}</strong>) đã được ghi nhận vào lớp học.
             </p>
 
-            <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
-
+            <div className="mt-5 sm:mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
               <button
                 type="button"
                 onClick={() => {
                   setIsCompletionPopupOpen(false);
                   onGoHome();
                 }}
-                className="neo-btn w-full sm:w-auto px-5 py-3 bg-white hover:bg-slate-100 text-slate-900 font-bold text-sm cursor-pointer"
+                className="neo-btn w-full sm:w-auto min-h-[46px] px-6 py-3 bg-white hover:bg-slate-100 text-slate-900 font-bold text-sm cursor-pointer"
               >
                 Đóng
               </button>
