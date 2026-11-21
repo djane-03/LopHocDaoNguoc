@@ -239,120 +239,46 @@ export const RECOGNITION_SIGNS: RecognitionSign[] = [
 export interface AllusionGlossaryItem {
   id: string;
   term: string;
-  category: "Điển tích" | "Điển cố";
-  sourceWork: string;
   historicalOrigin: string;
   symbolicMeaning: string;
 }
 
 export const ALLUSION_GLOSSARY: AllusionGlossaryItem[] = [
-  {
-    id: "hoa-nuoc-song",
-    term: "Hòa nước sông chén rượu ngọt ngào",
-    category: "Điển tích",
-    sourceWork: "Bình Ngô đại cáo — Nguyễn Trãi",
-    historicalOrigin:
-      "Truyện xưa Trung Quốc kể về một vị chỉ huy khéo dùng binh. Nhân có người dâng một vò rượu ngon, ông liền cho hòa vò rượu đó vào nước sông để mọi người cùng uống khiến quân sĩ cảm động, đồng lòng đánh giặc.",
-    symbolicMeaning: "Tình cảm gắn bó trên dưới một lòng như cha con (phụ tử), đồng cam cộng khổ của tướng sĩ.",
-  },
+
   {
     id: "ba-thu",
-    term: "Ba thu (Tam thu)",
-    category: "Điển cố",
-    sourceWork: "Truyện Kiều — Nguyễn Du (Dẫn từ Kinh Thi)",
+    term: "Ba thu",
     historicalOrigin:
-      "Xuất phát từ câu ca dao cổ trong Kinh Thi: 'Nhất nhật bất kiến như tam thu hề' (Một ngày không trông thấy mặt lâu bằng ba mùa thu – ba năm).",
-    symbolicMeaning: "Diễn tả nỗi nhớ nhung da diết, sâu sắc và cảm giác thời gian xa cách kéo dài đằng đẵng.",
+      "Xuất phát từ quan niệm cổ cho rằng một ngày không gặp nhau dài như ba mùa thu.",
+    symbolicMeaning: "Thường được dùng để diễn tả nỗi nhớ nhung sâu sắc hoặc cảm giác thời gian xa cách kéo dài.",
   },
   {
     id: "sam-thuong",
     term: "Sâm Thương",
-    category: "Điển cố",
-    sourceWork: "Truyện Kiều — Nguyễn Du",
     historicalOrigin:
-      "Bắt nguồn từ tên hai ngôi sao Sâm (phương Tây) và Thương (phương Đông) trong thiên văn học cổ. Hai ngôi sao này không bao giờ xuất hiện cùng lúc trên bầu trời.",
-    symbolicMeaning: "Tượng trưng cho sự xa cách, chia lìa đôi ngả hoặc cảnh ngộ éo le không có cơ hội gặp gỡ.",
+      "Bắt nguồn từ tên hai ngôi sao Sâm và Thương trong thiên văn học cổ. Hai ngôi sao này không bao giờ xuất hiện cùng lúc trên bầu trời.",
+    symbolicMeaning: "Tượng trưng cho sự xa cách, chia lìa hoặc khó có cơ hội gặp gỡ.",
   },
   {
     id: "mat-xanh",
-    term: "Mắt xanh (Thanh nhãn)",
-    category: "Điển cố",
-    sourceWork: "Truyện Kiều — Nguyễn Du (Tích Nguyễn Tịch thời Ngụy – Tấn)",
+    term: "Mắt xanh",
     historicalOrigin:
-      "Nguyễn Tịch đời Tấn khi quý trọng ai thì tiếp đón bằng mắt xanh (lòng đen của mắt), khi không ưa ai thì nhìn bằng mắt trắng (lòng trắng của mắt).",
-    symbolicMeaning: "Biểu thị sự yêu mến, quý trọng, đánh giá cao hoặc dành thiện cảm đặc biệt cho một người.",
+      "Liên quan đến câu chuyện về Nguyễn Tịch thời Ngụy – Tấn. Ông dùng ánh mắt thiện cảm để nhìn những người mình quý trọng.",
+    symbolicMeaning: "Dùng để chỉ việc được yêu mến, đánh giá cao hoặc có thiện cảm.",
   },
   {
     id: "lieu-chuong-dai",
     term: "Liễu Chương Đài",
-    category: "Điển cố",
-    sourceWork: "Truyện Kiều — Nguyễn Du (Văn học cổ Trung Hoa)",
     historicalOrigin:
-      "Xuất phát từ câu chuyện chàng Hàn Hoành đời Đường gửi thư cho người vợ là Liễu Thị ở phố Chương Đài khi hai người phải chia xa vì loạn lạc.",
-    symbolicMeaning: "Gợi hình ảnh người phụ nữ nơi quê nhà, nỗi nhớ thương, sự chia ly hoặc những đổi thay của số phận.",
+      "Xuất phát từ một điển cố nổi tiếng trong văn học Trung Hoa. Hình ảnh cây liễu ở Chương Đài thường gắn với người phụ nữ hoặc mối tình đã xa cách.",
+    symbolicMeaning: "Trong văn học trung đại, điển cố này thường được sử dụng để gợi nỗi nhớ, sự chia ly hoặc những đổi thay của số phận.",
   },
   {
     id: "co-ngu-my",
-    term: "Cỏ Ngu Mỹ & Ngọc Mị Nương",
-    category: "Điển cố",
-    sourceWork: "Chuyện người con gái Nam Xương — Nguyễn Dữ",
+    term: "Cỏ Ngu Mỹ",
     historicalOrigin:
-      "Cỏ Ngu Mỹ gắn với câu chuyện Ngu Cơ – ái thiếp của Hạng Vũ tự vẫn để giữ trọn nghĩa tình, nơi máu nàng chảy mọc lên thứ cỏ thơm. Ngọc Mị Nương gắn với tích Mị Nương – Trọng Thủy, máu nàng chảy xuống biển trai ăn vào hóa ngọc sáng.",
-    symbolicMeaning: "Tượng trưng cho tình yêu thủy chung, phẩm hạnh trinh bạch, đoan trang giữ tiết và nỗi oan khuất được hóa giải.",
-  },
-  {
-    id: "nuoc-canh-duong",
-    term: "Nước cành dương",
-    category: "Điển tích",
-    sourceWork: "Tích Phật giáo cổ (Thiên Trúc)",
-    historicalOrigin:
-      "Người nước Thiên Trúc tên là Phật Đồ Trừng rất giỏi phép chữa bệnh của nhà Phật. Khi con của Thạch勒 (Thạch Lộc) ốm nặng, Trừng lấy cành dương nhúng vào nước trong rẩy lên mình người bệnh, người bệnh liền tỉnh và sống lại.",
-    symbolicMeaning: "Chỉ thứ nước phép nhiệm màu có khả năng cứu sống, chữa lành bệnh tật và thanh tẩy khổ đau.",
-  },
-  {
-    id: "mat-cua-muop-dang",
-    term: "Mạt cưa mướp đắng",
-    category: "Điển tích",
-    sourceWork: "Thành ngữ / Truyện dân gian xưa",
-    historicalOrigin:
-      "Kể chuyện có kẻ lấy mạt cưa giả làm cám đem đi bán, tình cờ lại gặp một kẻ khác lấy mướp đắng giả làm dưa chuột. Hai bên mua bán, đổi chác cho nhau và cùng bị lừa.",
-    symbolicMeaning: "Dùng để chỉ phường bịp bợm, gian dối lại gặp đúng kẻ gian dối khác ('kẻ cắp gặp bà già').",
-  },
-  {
-    id: "giac-mong-nam-kha",
-    term: "Giấc mộng Nam Kha",
-    category: "Điển tích",
-    sourceWork: "Nam Kha Thái thú truyện (Đường truyền kỳ)",
-    historicalOrigin:
-      "Kể về Thuần Vu Phần uống rượu say ngủ quên dưới gốc cây hòe, mơ thấy mình làm Thái thú quận Nam Kha vinh hiển tột bậc suốt mấy chục năm, khi tỉnh dậy mới biết chỉ là tổ kiến dưới gốc cây hòe.",
-    symbolicMeaning: "Chỉ sự phù du, hư ảo và ngắn ngủi của công danh phú quý chốn trần gian.",
-  },
-  {
-    id: "quan-san",
-    term: "Quan san",
-    category: "Điển cố",
-    sourceWork: "Truyện Kiều — Nguyễn Du",
-    historicalOrigin:
-      "Ghép từ 'quan' (cửa ải nơi biên giới) và 'san' (núi non trùng điệp hiểm trở) trong thơ cổ biên tái.",
-    symbolicMeaning: "Chỉ vùng biên ải xa xôi, gợi sự cách trở, chia ly và hành trình vạn dặm đầy gian truân.",
-  },
-  {
-    id: "doi-cui-khoi-bep-tranh",
-    term: "Dời củi khỏi bếp tranh",
-    category: "Điển cố",
-    sourceWork: "Bài thơ 'Dạ Tạ' — Đỗ Phủ (và Hán thư)",
-    historicalOrigin:
-      "Xuất phát từ kế sách phòng hỏa hoạn từ gốc rễ: muốn lửa không bén lên mái tranh thì phải rút củi, dời củi ra khỏi bếp trước khi lửa bùng phát.",
-    symbolicMeaning: "Biểu thị tầm nhìn xa trông rộng, ngăn chặn hiểm họa hoặc tệ nạn ngay từ mầm mống ban đầu.",
-  },
-  {
-    id: "su-ky-tu-thu",
-    term: "Phạt Trụ diệt Khương · Trừ gian diệt bạo · Can gián",
-    category: "Điển cố",
-    sourceWork: "Sử ký (Tư Mã Thiên) & Tứ thư",
-    historicalOrigin:
-      "Hệ thống điển cố chính trị - đạo đức Nho gia trong Sử ký và Tứ thư: 'Phạt Trụ diệt Khương' (nén kẻ quyền thần), 'Trừ gian diệt bạo' (thải bớt kẻ nhũng lạm), 'Nhân nghĩa lễ trí tín' (cổ động Nho phong), 'Can gián' (mở đường cho người nói thẳng).",
-    symbolicMeaning: "Thể hiện lý tưởng trị quốc minh chính, đề cao bậc hiền tài chính trực và kỷ cương phép nước.",
+      "Cỏ Ngu Mỹ gắn với câu chuyện Ngu Cơ – ái thiếp của Hạng Vũ. Sau khi nàng qua đời, tương truyền nơi đó mọc lên loài hoa mang tên Ngu Mỹ.",
+    symbolicMeaning: "Tượng trưng cho tình yêu thủy chung, sự hy sinh và vẻ đẹp bi thương.",
   },
 ];
 

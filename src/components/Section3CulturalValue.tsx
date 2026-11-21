@@ -133,46 +133,12 @@ export const Section3CulturalValue: React.FC<Section3CulturalValueProps> = ({
             cổ điển mà còn giúp tác giả diễn đạt những cung bậc cảm xúc phức tạp bằng một hình thức ngắn gọn. 
           </p>
         </div>
-      </div>
 
-      {/* Interactive Dictionary of 12 Allusions from the PDF */}
-      <div className="neo-card p-4 sm:p-7 bg-white space-y-4 sm:space-y-5">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b-2 border-slate-900 pb-4">
-          <div>
-            <div className="text-[11px] sm:text-xs font-mono font-bold text-slate-600 flex items-center gap-1.5">
-              <BookMarked className="w-4 h-4 text-slate-900 shrink-0" />
-              <span>CẨM NANG GIẢI MÃ TƯ LIỆU NGỮ VĂN</span>
-            </div>
-            <h3 className="text-lg sm:text-xl font-bold text-slate-900 font-serif-display mt-1 leading-snug">
-              Từ điển Điển tích & Điển cố trọng tâm trong chương trình ({filteredGlossary.length})
-            </h3>
-            
-            <p className="text-sm sm:text-base text-slate-800 leading-relaxed mt-1.5">
+        <div className="space-y-4">
+          <p className="text-sm sm:text-base text-slate-800 leading-relaxed mt-1.5">
               Trong quá trình học Ngữ văn, học sinh thường bắt gặp nhiều điển tích, điển cố quen thuộc.
               Việc hiểu được nguồn gốc và ý nghĩa của chúng sẽ giúp quá trình đọc hiểu tác phẩm trở nên dễ dàng hơn.
-            </p>
-       
-          </div>
-
-          {/* Filter Bar */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full lg:w-auto shrink-0">
-            <div className="grid grid-cols-3 sm:flex items-center border-2 border-slate-900 bg-[#FAF8F5] w-full sm:w-auto">
-              {(["ALL", "Điển tích", "Điển cố"] as const).map((cat) => (
-                <button
-                  key={cat}
-                  type="button"
-                  onClick={() => setFilterCategory(cat)}
-                  className={`min-h-[42px] px-2.5 sm:px-3 py-2 text-xs font-bold transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
-                    filterCategory === cat
-                      ? "bg-slate-900 text-white"
-                      : "text-slate-700 hover:bg-slate-200"
-                  }`}
-                >
-                  {cat === "ALL" ? "Tất cả" : cat}
-                </button>
-              ))}
-            </div>
-          </div>
+          </p>
         </div>
 
         {/* Cards Grid */}
@@ -183,12 +149,6 @@ export const Section3CulturalValue: React.FC<Section3CulturalValueProps> = ({
               className="p-3.5 sm:p-4 bg-[#FAF8F5] border-2 border-slate-900 flex flex-col justify-between space-y-3"
             >
               <div className="space-y-2">
-                <div className="flex items-center justify-between gap-2 text-xs text-slate-600 border-b border-slate-300 pb-1.5">
-                  <span className="font-mono font-bold text-slate-900 shrink-0">{item.category}</span>
-                  <span className="truncate min-w-0 text-right" title={item.sourceWork}>
-                    {item.sourceWork}
-                  </span>
-                </div>
 
                 <h4 className="text-base font-bold text-slate-900 font-serif-display">
                   “{item.term}”
@@ -206,6 +166,50 @@ export const Section3CulturalValue: React.FC<Section3CulturalValueProps> = ({
               </div>
             </div>
           ))}
+        </div>
+        <div className="space-y-4">
+          <p className="text-sm sm:text-base text-slate-800 leading-relaxed mt-1.5">
+              Những điển tích, điển cố trên xuất hiện khá thường xuyên trong các tác phẩm văn học trung đại.
+              Việc ghi nhớ ý nghĩa cơ bản của chúng sẽ giúp người học chủ động hơn khi đọc hiểu và phân tích văn bản.
+          </p>
+        </div>
+      </div>
+
+      {/* Interactive Dictionary of 12 Allusions from the PDF */}
+      <div className="neo-card p-4 sm:p-7 bg-white space-y-4 sm:space-y-5">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b-2 border-slate-900 pb-4">
+          <div>
+            <div className="text-[11px] sm:text-xs font-mono font-bold text-slate-600 flex items-center gap-1.5">
+              <BookMarked className="w-4 h-4 text-slate-900 shrink-0" />
+              <span>CẨM NANG GIẢI MÃ TƯ LIỆU NGỮ VĂN</span>
+            </div>
+            <h3 className="text-lg sm:text-xl font-bold text-slate-900 font-serif-display mt-1 leading-snug">
+              Từ điển Điển tích & Điển cố trọng tâm trong chương trình ({filteredGlossary.length})
+            </h3>
+            
+            
+       
+          </div>
+        </div>
+        
+      </div>
+
+      {/* 5/ Kết luận */}
+      <div className="neo-card p-4 sm:p-7 bg-white space-y-4 sm:space-y-5">
+        <div className="border-b-2 border-slate-900 pb-3 sm:pb-4 space-y-1.5">
+          <h3 className="text-lg sm:text-2xl font-bold text-slate-900 font-serif-display">
+            5/ KẾT LUẬN
+          </h3>
+        </div>
+
+        <div className="space-y-4">
+          <p className="text-sm sm:text-base text-slate-800 leading-relaxed">
+            Điển tích và điển cố là những yếu tố nghệ thuật góp phần tạo nên bản sắc của văn học trung đại Việt Nam.
+            Không chỉ giúp ngôn ngữ trở nên cô đọng, giàu sức gợi, các điển này còn phản ánh vốn tri thức văn hóa và đặc điểm tư duy
+            nghệ thuật của người xưa. <br/> Đối với người học, việc nhận diện và giải mã điển tích, điển cố không chỉ hỗ trợ quá trình đọc hiểu
+            văn bản mà còn mở rộng hiểu biết về lịch sử, văn hóa và các giá trị nhân văn được lưu giữ trong văn học.
+            Vì vậy, đây là một nội dung quan trọng cần được chú ý khi tiếp cận các tác phẩm trung đại trong chương trình Ngữ văn THPT.
+          </p>
         </div>
       </div>
 
